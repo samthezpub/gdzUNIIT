@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="POST" th:object="${user}" th:action="@{/user/add}">
+        <label for="username" th:field="*{username}">Логин</label>
+        <input type="text" name="username" id="username">
+
+        <label for="password" th:field="*{password}">Пароль</label>
+        <input type="text" name="password" id="password">
+
+        <select th:field="*{variant.id}">
+            <option th:each="variant : ${allVariants}" name="variant"
+                    th:value="${variant.id}" th:text="${variant.variant_value}"></option>
+        </select>
+
+        <label for="enabled">Активирован?</label>
+        <input type="checkbox" th:field="*{enabled}" name="enabled" id="enabled" checked>
+
+        <input type="submit">
+    </form>
+</body>
+</html>

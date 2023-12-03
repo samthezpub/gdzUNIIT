@@ -3,6 +3,7 @@ package com.example.gdzunit.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,15 +29,29 @@ public class User implements UserDetails {
     @Column(name="password")
     private String password;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     @JoinColumn(name = "variant_id")
     private Variant variant;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private Set<Role> roles;
 
     @Column(name = "enabled")
     private Boolean enabled;
+
+    public User() {
+        this.roles = new HashSet<>();
+    }
+
+    public User(String username, String password, Variant variant, Set<Role> roles, Boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.variant = variant;
+        this.roles = roles;
+        this.enabled = enabled;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -73,14 +88,4 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", variant=" + variant.getVariant_value() +
-                ", roles=" + roles +
-                '}';
-    }
 }

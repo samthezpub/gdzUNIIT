@@ -3,6 +3,8 @@ package com.example.gdzunit.Services.impl;
 import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Exceptions.UserNotFoundException;
+import com.example.gdzunit.Exceptions.VariantNotFoundedException;
+import com.example.gdzunit.Repositories.RoleRepository;
 import com.example.gdzunit.Repositories.UserRepository;
 import com.example.gdzunit.Services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private VariantServiceImpl variantService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -31,17 +39,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername()).get();
-
+        boolean isUserFromDB = userRepository.findByUsername(user.getUsername()).isEmpty();
 
         try {
-            if (userFromDB != null) {
+            if (!isUserFromDB) {
                 throw new UserNotFoundException("Пользователь уже существует");
             }
 
-            Set<Role> roles = new HashSet<>();
-            roles.add(new Role("USER"));
+            Set<Role> roles = user.getRoles();
+            roles.add(roleRepository.findRoleByName("USER"));
+
             user.setRoles(roles);
+            Long id = user.getVariant().getId();
+
+            try {
+                user.setVariant(variantService.findVariantById(id));
+            } catch (VariantNotFoundedException e) {
+                throw new RuntimeException(e);
+            }
 
             userRepository.save(user);
         } catch (UserNotFoundException e) {
