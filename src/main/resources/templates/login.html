@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-  <link
-    rel="stylesheet"
-    href="../static/css/mdb.dark.min.css"
-    th:href="@{/css/mdb.dark.min.css}"
-  />
   <head>
     <title>Авторизация</title>
+
+    <link rel="stylesheet" th:href="@{/css/mdb.dark.min.css}">
+    <!-- Скрипт -->
+    <script th:src="@{/js/mdb.umd.min.js}"></script>
+
+    <script>
+      function comingsoon() {
+        alert("Скоро...");
+      }
+    </script>
   </head>
 
   <body>
@@ -55,15 +60,5 @@
       </form>
     </div>
 
-    <script>
-      function comingsoon() {
-        alert("Скоро...");
-      }
-    </script>
-    <!-- Скрипт -->
-    <script
-      src="../static/js/mdb.umd.min.js"
-      th:src="@{/js/mdb.umd.min.js}"
-    ></script>
   </body>
 </html>
