@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Страница модератора</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+
+    <link rel="stylesheet" href="css/mdb.dark.min.css" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <button
+          data-mdb-collapse-init
+          class="navbar-toggler"
+          type="button"
+          data-mdb-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <a class="navbar-brand mt-2 mt-lg-0" href="#">
+            <img
+              src="images/testicon.png"
+              height="15"
+              alt="Иконка сайта"
+              loading="lazy"
+            />
+          </a>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Категории</a>
+            </li>
+
+            <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
+            <li class="nav-item">
+              <a class="nav-link" href="#">Панель модератора</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <a class="text-reset me-3" href="#">
+            <i class="fas fa-shopping-cart"></i>
+          </a>
+
+          <!-- Уведомления -->
+          <div class="dropdown">
+            <a
+              data-mdb-dropdown-init
+              class="text-reset me-3 dropdown-toggle hidden-arrow"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              aria-expanded="false"
+            >
+              <i class="fas fa-bell"></i>
+
+              <!-- Для икноки о новых сообщениях -->
+              <span class="badge rounded-pill badge-notification bg-danger"
+                >-1</span
+              >
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdownMenuLink"
+            >
+              <li>
+                <a class="dropdown-item" href="#">Оповещения</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Потом придумаю</a>
+              </li>
+            </ul>
+          </div>
+          <!-- Avatar -->
+          <div class="dropdown">
+            <a
+              data-mdb-dropdown-init
+              class="dropdown-toggle d-flex align-items-center hidden-arrow"
+              href="#"
+              id="navbarDropdownMenuAvatar"
+              role="button"
+              aria-expanded="false"
+            >
+              <img
+                src="images/testavatar.png"
+                class="rounded-circle"
+                height="25"
+                alt="Фото профиля"
+                loading="lazy"
+              />
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdownMenuAvatar"
+            >
+              <li>
+                <a class="dropdown-item" href="#">Мой профиль</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Настройки</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item" href="#">Выйти</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="mt-5">
+      <h1 class="text-center mb-5">Страница модератора</h1>
+
+      <div class="container border rounded-5 pb-3">
+        <h5 class="text-center p-3">Список пользователей</h5>
+
+        <!-- Сам список -->
+        <ul class="list-group list-group-light">
+          <!-- карточка пользователя -->
+          <li
+            class="d-flex justify-content-between align-items-center border rounded-5 mb-3 p-3 row ms-1 me-1"
+          >
+            <div class="d-flex align-items-center col">
+              <img
+                src="images/testavatar.png"
+                alt="Фото профиля"
+                style="width: 45px; height: 45px"
+                class="rounded-circle"
+              />
+
+              <div class="ms-3">
+                <!-- Строка: логин, плашка "в сети" -->
+                <div class="d-inline-flex">
+                  <p class="mb-0 pe-3">RyanGosling</p>
+
+                  <!-- 
+                    Плашка "в сети"
+
+                    Использование:
+                    - badge-success - в сети
+                    - bg-gradient - не в сети
+                    - badge-danger - забанен
+                   -->
+                  <span class="badge rounded-pill m-auto badge-success"
+                    >Онлайн</span
+                  >
+                </div>
+
+                <div class="d-flex">
+                  <p class="text-muted mb-0 pe-2">Вариант:</p>
+                  <p class="mb-0" id="userVariant">123</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Кнопки сбоку -->
+            <div class="col-sm-3">
+              <ul class="navbar-nav d-flex flex-row justify-content-around">
+                <!-- Посмотреть -->
+                <li class="nav-item me-3 me-lg-0">
+                  <a class="text-reset d-inline-block" title="Посмотреть" href="#">
+                    <div class="bg-gradient p-2 rounded-2">
+                      <i class="fas fa-eye"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <!-- Редактировать -->
+                <li class="nav-item me-3 me-lg-0">
+                  <a class="text-reset d-inline-block" title="Редактировать" href="#">
+                    <div class="bg-gradient p-2 rounded-2">
+                      <i class="fas fa-edit"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <!-- Забанить -->
+                <li class="nav-item me-3 me-lg-0">
+                  <a class="text-reset d-inline-block" title="Забанить" href="#">
+                    <div class="bg-gradient p-2 rounded-2">
+                      <i class="fas fa-ban"></i>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <!-- Скрипты для работы всяких приколов -->
+    <script src="js/mdb.umd.min.js"></script>
+  </body>
+</html>

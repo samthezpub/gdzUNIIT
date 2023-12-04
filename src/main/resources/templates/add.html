@@ -1,26 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <form method="POST" th:object="${user}" th:action="@{/user/add}">
-        <label for="username" th:field="*{username}">Логин</label>
-        <input type="text" name="username" id="username">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Добавление пользователя</title>
+    <link rel="stylesheet" href="static/css/mdb.dark.min.css" th:href="@{/css/mdb.dark.min.css}"/>
+  </head>
 
-        <label for="password" th:field="*{password}">Пароль</label>
-        <input type="text" name="password" id="password">
+  <body>
+    <div class="container bg-dark-subtle rounded-5 p-5">
+      <form method="POST" th:object="${user}" th:action="@{/user/add}">
+        <!-- Логин -->
+        <div class="form-outline mb-4" data-mdb-input-init>
+          <input
+            class="form-control"
+            type="text"
+            name="username"
+            id="username"
+          />
+          <label class="form-label" for="username" th:field="*{username}"
+            >Логин</label
+          >
+        </div>
 
-        <select th:field="*{variant.id}">
-            <option th:each="variant : ${allVariants}" name="variant"
-                    th:value="${variant.id}" th:text="${variant.variant_value}"></option>
-        </select>
+        <!-- Пароль -->
+        <div class="form-outline mb-4" data-mdb-input-init>
+          <input
+            class="form-control"
+            type="text"
+            name="password"
+            id="password"
+          />
+          <label class="form-label" for="password" th:field="*{password}"
+            >Пароль</label
+          >
+        </div>
 
-        <label for="enabled">Активирован?</label>
-        <input type="checkbox" th:field="*{enabled}" name="enabled" id="enabled" checked>
+        <div class="row mb-4">
+          <div class="col d-flex justify-content-center">
+            <!-- Чекбокс -->
+            <div class="form-check">
+              <label for="enabled" class="form-check-label"
+                >Активировать аккаунт</label
+              >
+              <input
+                class="form-check-input"
+                type="checkbox"
+                th:field="*{enabled}"
+                name="enabled"
+                id="enabled"
+                checked
+              />
+            </div>
+          </div>
 
-        <input type="submit">
-    </form>
-</body>
+          <div class="col text-center">
+            <!-- Выбор варианта -->
+            <label class="form-label">Вариант</label>
+
+            <select class="form-select-sm" th:field="*{variant.id}">
+              <option
+                th:each="variant : ${allVariants}"
+                name="variant"
+                th:value="${variant.id}"
+                th:text="${variant.variant_value}"
+              ></option>
+            </select>
+          </div>
+        </div>
+
+        <input
+          class="btn btn-primary btn-block"
+          data-mdb-ripple-init
+          type="submit"
+          value="Добавить пользователя"
+        />
+      </form>
+    </div>
+
+    
+
+    <script src="js/mdb.es.min.js"></script>
+  </body>
 </html>
