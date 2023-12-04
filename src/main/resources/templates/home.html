@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-</head>
-<body>
-    <h1>hello</h1>
-</body>
+
+    <link
+      rel="stylesheet"
+      href="../static/css/mdb.dark.min.css"
+      th:href="@{/css/mdb.dark.min.css}"
+    />
+  </head>
+  <body>
+    <div class="text-center bg-dark-subtle p-5 rounded-5 m-5">
+      <h1 class="p-3">ну типа это, ты вошёл окда</h1>
+
+      <br>
+      
+      <a href="/logout">
+        <div class="text-center">Выйти</div>
+      </a>
+    </div>
+
+    <!-- Скрипт -->
+    <script
+      src="../static/js/mdb.umd.min.js"
+      th:src="@{/js/mdb.umd.min.js}"
+    ></script>
+  </body>
 </html>

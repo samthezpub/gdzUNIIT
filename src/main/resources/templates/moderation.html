@@ -13,7 +13,11 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
 
-    <link rel="stylesheet" href="css/mdb.dark.min.css" />
+    <link
+      rel="stylesheet"
+      href="../static/css/mdb.dark.min.css"
+      th:href="@{/css/mdb.dark.min.css}"
+    />
   </head>
 
   <body>
@@ -174,7 +178,11 @@
               <ul class="navbar-nav d-flex flex-row justify-content-around">
                 <!-- Посмотреть -->
                 <li class="nav-item me-3 me-lg-0">
-                  <a class="text-reset d-inline-block" title="Посмотреть" href="#">
+                  <a
+                    class="text-reset d-inline-block"
+                    title="Посмотреть"
+                    href="#"
+                  >
                     <div class="bg-gradient p-2 rounded-2">
                       <i class="fas fa-eye"></i>
                     </div>
@@ -183,7 +191,11 @@
 
                 <!-- Редактировать -->
                 <li class="nav-item me-3 me-lg-0">
-                  <a class="text-reset d-inline-block" title="Редактировать" href="#">
+                  <a
+                    class="text-reset d-inline-block"
+                    title="Редактировать"
+                    href="#"
+                  >
                     <div class="bg-gradient p-2 rounded-2">
                       <i class="fas fa-edit"></i>
                     </div>
@@ -192,7 +204,11 @@
 
                 <!-- Забанить -->
                 <li class="nav-item me-3 me-lg-0">
-                  <a class="text-reset d-inline-block" title="Забанить" href="#">
+                  <a
+                    class="text-reset d-inline-block"
+                    title="Забанить"
+                    href="#"
+                  >
                     <div class="bg-gradient p-2 rounded-2">
                       <i class="fas fa-ban"></i>
                     </div>
@@ -206,6 +222,9 @@
     </main>
 
     <!-- Скрипты для работы всяких приколов -->
-    <script src="js/mdb.umd.min.js"></script>
+    <script
+      src="../static/js/mdb.umd.min.js"
+      th:src="@{/js/mdb.umd.min.js}"
+    ></script>
   </body>
 </html>
