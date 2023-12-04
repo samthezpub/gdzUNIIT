@@ -13,6 +13,18 @@
     <div class="text-center bg-dark-subtle p-5 rounded-5 m-5">
       <h1 class="p-3">ну типа это, ты вошёл окда</h1>
 
+      <div class="card-container">
+
+        <div class="card" th:each="subject : ${subjects}" style="width: 18rem;">
+          <img th:src="${subject.getImage_url()}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${subject.getName()}">Card title</h5>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+
+      </div>
+
       <br>
       
       <a href="/logout">

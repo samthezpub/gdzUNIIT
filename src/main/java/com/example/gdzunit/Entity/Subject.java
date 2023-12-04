@@ -17,6 +17,9 @@ public class Subject {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "image_url")
+    private String image_url;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "answers_id")
     private List<Answer> answers;
