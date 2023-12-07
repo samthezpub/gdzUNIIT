@@ -2,32 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Инфо о пользователе</title>
 
     <link
       rel="stylesheet"
-      th:href="@{/css/mdb.dark.min.css}"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
     />
   </head>
-  <body>
-    <div class="text-center bg-dark-subtle p-5 rounded-5 m-5">
-      <h1 class="p-3">ну типа это, ты вошёл окда</h1>
 
-      <div class="card-container">
-
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title" th:text="${user.getUsername()}">Логин</h5>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
+  <body data-bs-theme="dark">
+    <!-- Карточка -->
+    <div class="container-sm bg-dark-subtle rounded-3 mt-5 p-5">
+      <!-- Главное о пользователе -->
+      <div class="container-fluid d-inline-flex">
+        <!-- Аватарка -->
+        <div style="width: 7rem; height: 7rem">
+          
+          <!-- ОБЯЗАТЕЛЬНО ПОТОМ УБРАТЬ TESTAVATAR!!! -->
+          <img
+            class="rounded-circle img-fluid"
+            src="../static/images/testavatar.png"
+            th:href="@{/images/testavatar.png}"
+            width="100%"
+            height="100%"
+          />
         </div>
 
+        <!-- Имя, статус... -->
+        <div class="ps-5 flex-column">
+          <div class="d-inline-flex align-items-center">
+            <h1 th:text="${user.getUsername()}">Имя пользователя</h1>
+            <span class="ms-3 badge rounded-pill text-bg-dark">Оффлайн</span>
+          </div>
+
+          <div class="row">
+            <!-- Вариант -->
+            <div class="col">
+              <div class="d-inline-flex align-items-center">
+                <p class="text-muted">Вариант:</p>
+                <p class="ms-2" th:text="${userVariant.getVariant_value()}">Вариант</p>
+              </div>
+            </div>
+
+            <!-- ID -->
+            <div class="col">
+              <div class="d-inline-flex align-items-center">
+                <p class="text-muted">ID:</p>
+                <p class="ms-2" th:text="${user.getId()}">ID</p>
+              </div>
+            </div>
+
+            <!-- Активирован? -->
+            <div class="col">
+              <div class="d-inline-flex align-items-center">
+                <p class="text-muted">Активирован?</p>
+                <p class="ms-2" th:text="${isUserEnabled}">Статус</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Скрипт -->
     <script
-      th:src="@{/js/mdb.umd.min.js}"
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
     ></script>
   </body>
 </html>
