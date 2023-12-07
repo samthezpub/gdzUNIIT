@@ -20,8 +20,7 @@ public class Subject {
     @Column(name = "image_url")
     private String image_url;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "answers_id")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Answer> answers;
 
 }

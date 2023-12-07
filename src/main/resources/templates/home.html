@@ -35,7 +35,7 @@
         <div class="card" th:each="subject : ${subjects}"
              style=                 'width: 25%;
                                     background: url("/images/testicon.png") no-repeat center; background-size: cover'>
-            <a href="#">
+            <a th:href="@{/answers/get(id=${subject.id})}">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${subject.getName()}">
                         Card title
