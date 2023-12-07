@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+
+    <link
+      rel="stylesheet"
+      th:href="@{/css/mdb.dark.min.css}"
+    />
+  </head>
+  <body>
+    <div class="text-center bg-dark-subtle p-5 rounded-5 m-5">
+      <h1 class="p-3">ну типа это, ты вошёл окда</h1>
+
+      <div class="card-container">
+
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${user.getUsername()}">Логин</h5>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Скрипт -->
+    <script
+      th:src="@{/js/mdb.umd.min.js}"
+    ></script>
+  </body>
+</html>

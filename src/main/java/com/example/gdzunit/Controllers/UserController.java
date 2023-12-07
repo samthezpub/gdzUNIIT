@@ -22,6 +22,12 @@ public class UserController {
         this.variantService = variantService;
     }
 
+    @GetMapping("/user")
+    public String userInfo(@RequestParam(value = "id", defaultValue = "0") Long id, Model model){
+        model.addAttribute("user", userService.getUser(id));
+        return "userinfo";
+    }
+
     @GetMapping("/add")
     public String addUser(Model model) {
         List<Variant> allVariants = variantService.findAll();
