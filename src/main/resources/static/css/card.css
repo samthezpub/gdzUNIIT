@@ -8,7 +8,7 @@
 .card{
     border-radius: 25px;
     max-width: 10rem;
-    max-height: 10rem;
+    min-height: 10rem;
     background: chocolate;
     justify-content: center;
     text-align: center;
@@ -16,4 +16,18 @@
     flex: 1 0 10rem;
     margin: 30px;
     box-sizing: border-box;
+}
+
+.card a{
+    text-decoration: none;
+    color: #FFFFFF;
+    text-shadow: 2px 2px 0 #4074b5, 2px -2px 0 #4074b5, -2px 2px 0 #4074b5, -2px -2px 0 #4074b5, 2px 0px 0 #4074b5, 0px 2px 0 #4074b5, -2px 0px 0 #4074b5, 0px -2px 0 #4074b5;
+    color: #FFFFFF;
+}
+
+.card .text-body .card-title{
+    margin: 0;
+
+    color: orangered;
+    text-shadow: #0a53be;
 }
