@@ -84,11 +84,16 @@ public class WebSecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/src/**").permitAll()
                         .anyRequest().authenticated()
                 )
+
                 .formLogin((form) -> form
                         .loginPage("/login")
+
                         .permitAll()
                 )
-                .logout((logout) -> logout.permitAll());
+                .logout((logout) ->
+                        logout.permitAll()
+                                .logoutSuccessUrl("/login")
+                );
 
         return http.build();
     }

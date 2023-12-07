@@ -34,7 +34,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "variant_id")
     private Variant variant;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private Set<Role> roles;
 

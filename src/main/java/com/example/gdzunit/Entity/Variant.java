@@ -1,5 +1,6 @@
 package com.example.gdzunit.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class Variant {
     @Column(name = "variant")
     private Short variant_value;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "variant", cascade = CascadeType.MERGE)
     private Set<User> users;
 
