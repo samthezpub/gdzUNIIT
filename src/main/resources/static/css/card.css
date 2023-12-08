@@ -20,8 +20,8 @@
 
 .card a{
     text-decoration: none;
-    color: greenyellow;
-    text-shadow: 2px 2px 0 #4074b5, 2px -2px 0 #4074b5, -2px 2px 0 #4074b5, -2px -2px 0 #4074b5, 2px 0px 0 #4074b5, 0px 2px 0 #4074b5, -2px 0px 0 #4074b5, 0px -2px 0 #4074b5;
+    color: white;
+    text-shadow: 2px 2px 0px black, 5px 4px 0px rgba(0,0,0,0.15);
 }
 
 .card .text-body .card-title{
