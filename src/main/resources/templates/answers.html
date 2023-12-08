@@ -153,7 +153,7 @@ https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode -->
 </nav>
 
 <div class="container">
-    <div class="card-link-holder" th:each="answer : ${answers}" style="width: 100%">
+    <div class="card-link-holder" th:if="${error eq null}" th:each="answer : ${answers}" style="width: 100%">
         <a th:href="@{/answers/showanswer(title=${answer.title})}">
             <div class="card mb-3" style="max-width: 100%;background: #9ec5fe">
                 <div>
@@ -163,6 +163,10 @@ https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode -->
                 </div>
             </div>
         </a>
+    </div>
+
+    <div th:if="${error}" class="alert alert-primary m-5">
+        <p th:text="${error}">132</p>
     </div>
 </div>
 
