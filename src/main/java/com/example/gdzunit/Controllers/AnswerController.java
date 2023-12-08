@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,7 +27,7 @@ public class AnswerController {
     }
 
     @GetMapping("/getanswers")
-    public String showAnswersBySubjectId(@RequestParam("subject") String subject, Model model){
+    public String showAnswerListBySubjectId(@RequestParam("subject") String subject, Model model){
         try {
             List<Answer> allAnswersBySubjectName = answerService.findAllAnswersBySubjectName(subject);
             allAnswersBySubjectName.forEach((s) -> {
@@ -39,5 +40,15 @@ public class AnswerController {
         return "answers";
     }
 
+    @GetMapping("/showanswer")
+    public String showAnswerById(@RequestParam("title") String title, Model model){
+        try {
+            Answer answerByAnswerTitle = answerService.findAnswerByAnswerTitle(title);
+            model.addAttribute("answer", answerByAnswerTitle);
+        } catch (NoAnswersException e) {
+            log.info("Юзер попытался получить несуществующий ответ: " + title + " Время: " + new Date());
+        }
+        return "showAnswer";
+    }
 
 }

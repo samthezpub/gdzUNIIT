@@ -26,5 +26,10 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAllAnswersBySubjectName(name).orElseThrow(() -> new NoAnswersException("Нет ответов"));
     }
 
+    @Override
+    public Answer findAnswerByAnswerTitle(String title) throws NoAnswersException {
+        return answerRepository.findAnswerByAnswerTitle(title).orElseThrow(() -> new NoAnswersException("Нет ответа"));
+    }
+
 
 }
