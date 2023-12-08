@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+// Это энтити с полями id, username, password, variant(id), roles
+// Он реализует интерфейс UserDetails, что позволяет работать со Spring Security
 @Entity
 @Table(name = "users")
 @Getter

@@ -1,6 +1,7 @@
 package com.example.gdzunit.Services;
 
 import com.example.gdzunit.Entity.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {

@@ -49,4 +49,6 @@ public class UserController {
 
         return "redirect:/user/add"; // Перенаправление на GET-метод
     }
+
+
 }
