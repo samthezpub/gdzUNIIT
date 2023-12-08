@@ -47,6 +47,7 @@ public class AnswerController {
             model.addAttribute("answer", answerByAnswerTitle);
         } catch (NoAnswersException e) {
             log.info("Юзер попытался получить несуществующий ответ: " + title + " Время: " + new Date());
+            return "redirect:/error404";
         }
         return "showAnswer";
     }
