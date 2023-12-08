@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-  <div th:each="answer : ${answers}" th:text="${answer.title}">
-  </div>
-</body>
+    <body>
+        <div th:each="answer : ${answers}">
+            <a th:href="@{/answers/showanswer(title=${answer.title})}" th:text="${answer.title}"></a>
+        </div>
+    </body>
 </html>
