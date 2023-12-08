@@ -1,11 +1,11 @@
 package com.example.gdzunit.Controllers;
 
 import com.example.gdzunit.Entity.Answer;
-import com.example.gdzunit.Entity.User;
+import com.example.gdzunit.Entity.Variant;
 import com.example.gdzunit.Exceptions.NoAnswersException;
 import com.example.gdzunit.Services.impl.AnswerServiceImpl;
+import com.example.gdzunit.Services.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +21,18 @@ import java.util.List;
 public class AnswerController {
 
     private final AnswerServiceImpl answerService;
+    private final UserServiceImpl userService;
 
-    public AnswerController(AnswerServiceImpl answerService) {
+    public AnswerController(AnswerServiceImpl answerService, UserServiceImpl userService) {
         this.answerService = answerService;
+        this.userService = userService;
     }
 
     @GetMapping("/getanswers")
     public String showAnswerListBySubjectId(@RequestParam("subject") String subject, Model model){
+        Short variantValue = userService.getCurrentUser().getVariant().getVariant_value();
         try {
-            List<Answer> allAnswersBySubjectName = answerService.findAllAnswersBySubjectName(subject);
+            List<Answer> allAnswersBySubjectName = answerService.findAllAnswersBySubjectNameAndVariant(subject, variantValue);
             allAnswersBySubjectName.forEach((s) -> {
                 log.info(s.toString());
             });
