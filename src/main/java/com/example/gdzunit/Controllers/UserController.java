@@ -50,5 +50,20 @@ public class UserController {
         return "redirect:/user/add"; // Перенаправление на GET-метод
     }
 
+    @GetMapping("/user/profile")
+    public String showProfile(Model model){
+        User currentUser = userService.getCurrentUser();
 
+        model.addAttribute("user", currentUser);
+
+        if (currentUser.isEnabled()) {
+            model.addAttribute("isUserEnabled", "Да");
+        } else {
+            model.addAttribute("isUserEnabled", "Нет");
+        }
+
+        model.addAttribute("userVariant", currentUser.getVariant());
+
+        return "userinfo";
+    }
 }

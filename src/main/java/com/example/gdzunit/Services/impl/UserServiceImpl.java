@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService {
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<User> byUsername = userRepository.findByUsername(username);
-        log.error("Получен юзер" + byUsername);
         return byUsername.orElseThrow(()-> new UsernameNotFoundException("Юзер не найден!"));
     }
 
