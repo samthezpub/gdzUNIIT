@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Страница модератора</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+
+  <body data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <!-- Логотип -->
+        <a class="navbar-brand" href="/">
+          <img
+            src="../static/images/testicon.png"
+            th:src="@{/images/testicon.png}"
+            alt="Логотип"
+            width="32"
+            class="d-inline-block align-text-top me-2"
+          />
+          ГДЗ УНИИТ
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Элементы меню -->
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Главная</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Категории</a>
+            </li>
+            <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Панель модератора</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true"
+                >Бесплатная активация</a
+              >
+            </li>
+          </ul>
+
+          <!-- Уведомления и аватарка -->
+          <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+              <a
+                data-bs-toggle="dropdown"
+                class="text-reset dropdown-toggle hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                aria-expanded="false"
+              >
+                <i class="fas fa-bell"></i>
+                <!-- Для икноки о новых сообщениях -->
+                <span
+                  class="position-absolute translate-middle badge rounded-pill bg-danger"
+                  >-1
+                  <span class="visually-hidden">Непрочитанных СМС</span>
+                </span>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Оповещения</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Потом придумаю</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <a
+                data-bs-toggle="dropdown"
+                class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuAvatar"
+                role="button"
+                aria-expanded="false"
+              >
+                <img
+                  src="../static/images/testavatar.png"
+                  th:src="@{/images/testavatar.png}"
+                  class="rounded-circle"
+                  height="25"
+                  alt="Фото профиля"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuAvatar"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Мой профиль</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Настройки</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="/logout">Выйти</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="mt-5">
+      <h1 class="text-center mb-5">Страница модератора</h1>
+
+      <div class="container border rounded-5 pb-3">
+        <h5 class="text-center p-3">Список пользователей</h5>
+
+        <!-- Сам список -->
+        <ul class="list-group list-group-light">
+          <!-- карточка пользователя -->
+          <li
+            class="d-flex justify-content-between align-items-center border rounded-5 mb-3 p-3 row ms-1 me-1"
+          >
+            <div class="d-flex align-items-center col">
+              <img
+                src="../static/images/testavatar.png"
+                th:src="@{/images/testavatar.png}"
+                alt="Фото профиля"
+                style="width: 45px; height: 45px"
+                class="rounded-circle"
+              />
+
+              <div class="ms-3">
+                <!-- Строка: логин, плашка "в сети" -->
+                <div class="d-inline-flex">
+                  <p class="mb-0 pe-3">RyanGosling</p>
+
+                  <!-- 
+                    Плашка "в сети"
+
+                    Использование:
+                    - text-bg-success - в сети
+                    - text-bg-secondary - не в сети
+                    - text-bg-danger - забанен
+                   -->
+                  <span class="badge rounded-pill m-auto text-bg-success"
+                    >Онлайн</span
+                  >
+                </div>
+
+                <div class="d-flex">
+                  <p class="text-muted mb-0 pe-2">Вариант:</p>
+                  <p class="mb-0" id="userVariant">123</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Кнопки сбоку -->
+            <div class="col-sm-3">
+              <ul class="navbar-nav d-flex flex-row justify-content-around">
+                <!-- Посмотреть -->
+                <li class="nav-item me-3 me-lg-0">
+                  <a
+                    class="text-reset d-inline-block"
+                    title="Посмотреть"
+                    href="#"
+                  >
+                    <div class="bg-gradient p-2 rounded-2">
+                      <i class="fas fa-eye"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <!-- Редактировать -->
+                <li class="nav-item me-3 me-lg-0">
+                  <a
+                    class="text-reset d-inline-block"
+                    title="Редактировать"
+                    href="#"
+                  >
+                    <div class="bg-gradient p-2 rounded-2">
+                      <i class="fas fa-edit"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <!-- Забанить -->
+                <li class="nav-item me-3 me-lg-0">
+                  <a
+                    class="text-reset d-inline-block"
+                    title="Забанить"
+                    href="#"
+                  >
+                    <div class="bg-gradient p-2 rounded-2">
+                      <i class="fas fa-ban"></i>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <!-- Скрипты для работы всяких приколов -->
+    <script
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+  </body>
+</html>

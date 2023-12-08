@@ -35,7 +35,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = String.valueOf(authentication.getCredentials());
 
         if (user.getPassword().equals(password)) {
-            return new UsernamePasswordAuthenticationToken(username, password, Arrays.asList());
+            return new UsernamePasswordAuthenticationToken(username, password, authentication.getAuthorities());
         } else {
             throw new AuthenticationCredentialsNotFoundException("Error in authentication!");
         }

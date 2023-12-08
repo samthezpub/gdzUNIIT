@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Инфо о пользователе</title>
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+
+    <link
+            rel="stylesheet"
+            href="../static/css/bootstrap.min.css"
+            th:href="@{/css/bootstrap.min.css}"
+    />
+</head>
+
+<body data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <!-- Логотип -->
+        <a class="navbar-brand" href="/" style="display: flex; align-items: center;">
+            <img
+                    src="../static/images/testicon.png"
+                    th:src="@{/images/testicon.png}"
+                    alt="Логотип"
+                    width="32"
+                    class="d-inline-block align-text-top me-2"
+            />
+            <p style="margin: 0">ГДЗ УНИИТ</p>
+        </a>
+
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Элементы меню -->
+        <div
+                class="collapse navbar-collapse justify-content-between"
+                id="navbarNav"
+        >
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Категории</a>
+                </li>
+                <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#"
+                    >Панель модератора</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true"
+                    >Бесплатная активация</a
+                    >
+                </li>
+            </ul>
+
+            <!-- Уведомления и аватарка -->
+            <div class="d-flex align-items-center">
+                <div class="dropdown me-3">
+                    <a
+                            data-bs-toggle="dropdown"
+                            class="text-reset dropdown-toggle hidden-arrow"
+                            href="#"
+                            id="navbarDropdownMenuLink"
+                            role="button"
+                            aria-expanded="false"
+                    >
+                        <i class="fas fa-bell"></i>
+                        <!-- Для икноки о новых сообщениях -->
+                        <span
+                                class="position-absolute translate-middle badge rounded-pill bg-danger"
+                        >-1
+                  <span class="visually-hidden">Непрочитанных СМС</span>
+                </span>
+                    </a>
+                    <ul
+                            class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                            aria-labelledby="navbarDropdownMenuLink"
+                    >
+                        <li>
+                            <a class="dropdown-item" href="#">Оповещения</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item">Не придумал</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <a
+                            data-bs-toggle="dropdown"
+                            class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                            href="#"
+                            id="navbarDropdownMenuAvatar"
+                            role="button"
+                            aria-expanded="false"
+                    >
+                        <img
+                                src="../static/images/testavatar.png"
+                                th:src="@{/images/testavatar.png}"
+                                class="rounded-circle"
+                                height="25"
+                                alt="Фото профиля"
+                                loading="lazy"
+                        />
+                    </a>
+                    <ul
+                            class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                            aria-labelledby="navbarDropdownMenuAvatar"
+                    >
+                        <li>
+                            <a class="dropdown-item" th:href="@{/user/profile}">Мой профиль</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Настройки</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/logout">Выйти</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Карточка -->
+<div class="container-sm bg-dark-subtle rounded-3 mt-5 p-5">
+    <!-- Главное о пользователе -->
+    <div class="container-fluid d-inline-flex">
+        <!-- Аватарка -->
+        <div style="width: 7rem; height: 7rem">
+            <!-- ОБЯЗАТЕЛЬНО ПОТОМ УБРАТЬ TESTAVATAR!!! -->
+            <img
+                    class="rounded-circle img-fluid"
+                    src="../static/images/testavatar.png"
+                    th:src="@{/images/testavatar.png}"
+                    width="100%"
+                    height="100%"
+            />
+        </div>
+
+        <!-- Имя, статус... -->
+        <div class="ps-5 flex-column">
+            <div class="d-inline-flex align-items-center">
+                <h1 th:text="${user.getUsername()}">Имя пользователя</h1>
+                <span class="ms-3 badge rounded-pill text-bg-dark">Оффлайн</span>
+            </div>
+
+            <div class="row">
+                <!-- Вариант -->
+                <div class="col">
+                    <div class="d-inline-flex align-items-center">
+                        <p class="text-muted">Вариант:</p>
+                        <p class="ms-2" th:text="${userVariant.getVariant_value()}">
+                            Вариант
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ID -->
+                <div class="col">
+                    <div class="d-inline-flex align-items-center">
+                        <p class="text-muted">ID:</p>
+                        <p class="ms-2" th:text="${user.getId()}">ID</p>
+                    </div>
+                </div>
+
+                <!-- Активирован? -->
+                <div class="col">
+                    <div class="d-inline-flex align-items-center">
+                        <p class="text-muted">Активирован?</p>
+                        <p class="ms-2" th:text="${isUserEnabled}">Статус</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Скрипт -->
+<script
+        src="../static/js/bootstrap.bundle.min.js"
+        th:src="@{/js/bootstrap.bundle.min.js}"
+></script>
+</body>
+</html>

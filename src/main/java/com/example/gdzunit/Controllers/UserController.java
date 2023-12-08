@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
     private final UserServiceImpl userService;
@@ -22,7 +21,21 @@ public class UserController {
         this.variantService = variantService;
     }
 
-    @GetMapping("/add")
+    @GetMapping("/user")
+    public String userInfo(@RequestParam(value = "id", defaultValue = "0") Long id, Model model){
+        model.addAttribute("user", userService.getUser(id));
+
+        if (userService.getUser(id).isEnabled()) {
+            model.addAttribute("isUserEnabled", "Да");
+        } else {
+            model.addAttribute("isUserEnabled", "Нет");
+        }
+
+        model.addAttribute("userVariant", userService.getUser(id).getVariant());
+        return "userinfo";
+    }
+
+    @GetMapping("/user/add")
     public String addUser(Model model) {
         List<Variant> allVariants = variantService.findAll();
         model.addAttribute("allVariants", allVariants);
@@ -30,10 +43,27 @@ public class UserController {
         return "add";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/user/add")
     public String confirmAddUser(@ModelAttribute User user) {
         userService.saveUser(user);
 
         return "redirect:/user/add"; // Перенаправление на GET-метод
+    }
+
+    @GetMapping("/user/profile")
+    public String showProfile(Model model){
+        User currentUser = userService.getCurrentUser();
+
+        model.addAttribute("user", currentUser);
+
+        if (currentUser.isEnabled()) {
+            model.addAttribute("isUserEnabled", "Да");
+        } else {
+            model.addAttribute("isUserEnabled", "Нет");
+        }
+
+        model.addAttribute("userVariant", currentUser.getVariant());
+
+        return "userinfo";
     }
 }

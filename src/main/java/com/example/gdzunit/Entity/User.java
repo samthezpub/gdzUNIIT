@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+// Это энтити с полями id, username, password, variant(id), roles
+// Он реализует интерфейс UserDetails, что позволяет работать со Spring Security
 @Entity
 @Table(name = "users")
 @Getter
@@ -34,12 +36,16 @@ public class User implements UserDetails {
     @JoinColumn(name = "variant_id")
     private Variant variant;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.MERGE)
     private Set<Role> roles;
 
     @Column(name = "enabled")
     private Boolean enabled;
+
+    // TODO: сделать аватарки пользователям
+    @Column(name = "avatar")
+    private String avatarURL;
 
     public User() {
         this.roles = new HashSet<>();
@@ -87,5 +93,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 }

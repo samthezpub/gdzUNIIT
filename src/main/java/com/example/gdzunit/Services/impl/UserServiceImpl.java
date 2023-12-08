@@ -9,11 +9,11 @@ import com.example.gdzunit.Repositories.UserRepository;
 import com.example.gdzunit.Services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,12 +29,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private VariantServiceImpl variantService;
 
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<User> byUsername = userRepository.findByUsername(username);
-        log.error("Получен юзер" + byUsername);
         return byUsername.orElseThrow(()-> new UsernameNotFoundException("Юзер не найден!"));
+    }
+
+    public User getCurrentUser(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return loadUserByUsername(principal.toString());
     }
 
     @Override
@@ -68,4 +73,10 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
+
+    @Override
+    public User getUser(long id) {
+        return userRepository.getReferenceById(id);
+    }
+
 }

@@ -1,26 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <form method="POST" th:object="${user}" th:action="@{/user/add}">
-        <label for="username" th:field="*{username}">Логин</label>
-        <input type="text" name="username" id="username">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <label for="password" th:field="*{password}">Пароль</label>
-        <input type="text" name="password" id="password">
+    <title>Добавление пользователя</title>
 
-        <select th:field="*{variant.id}">
-            <option th:each="variant : ${allVariants}" name="variant"
-                    th:value="${variant.id}" th:text="${variant.variant_value}"></option>
-        </select>
+    <link
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
 
-        <label for="enabled">Активирован?</label>
-        <input type="checkbox" th:field="*{enabled}" name="enabled" id="enabled" checked>
+  <body data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <!-- Логотип -->
+        <a class="navbar-brand" href="/">
+          <img
+            src="../static/images/testicon.png"
+            th:src="@{/images/testicon.png}"
+            alt="Логотип"
+            width="32"
+            class="d-inline-block align-text-top me-2"
+          />
+          ГДЗ УНИИТ
+        </a>
 
-        <input type="submit">
-    </form>
-</body>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Элементы меню -->
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Главная</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Категории</a>
+            </li>
+            <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Панель модератора</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true"
+                >Бесплатная активация</a
+              >
+            </li>
+          </ul>
+
+          <!-- Уведомления и аватарка -->
+          <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+              <a
+                data-bs-toggle="dropdown"
+                class="text-reset dropdown-toggle hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                aria-expanded="false"
+              >
+                <i class="fas fa-bell"></i>
+                <!-- Для икноки о новых сообщениях -->
+                <span
+                  class="position-absolute translate-middle badge rounded-pill bg-danger"
+                  >-1
+                  <span class="visually-hidden">Непрочитанных СМС</span>
+                </span>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Оповещения</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Потом придумаю</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <a
+                data-bs-toggle="dropdown"
+                class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuAvatar"
+                role="button"
+                aria-expanded="false"
+              >
+                <img
+                  src="../static/images/testavatar.png"
+                  th:src="@{/images/testavatar.png}"
+                  class="rounded-circle"
+                  height="25"
+                  alt="Фото профиля"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuAvatar"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Мой профиль</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Настройки</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="/logout">Выйти</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container bg-dark-subtle rounded-5 p-5 mt-5">
+      <form method="POST" th:object="${user}" th:action="@{/user/add}">
+        <!-- Логин -->
+        <div class="mb-4" data-mdb-input-init>
+          <label class="form-label" for="username" th:field="*{username}"
+            >Логин</label
+          >
+
+          <input
+            class="form-control"
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Логин"
+          />
+        </div>
+
+        <!-- Пароль -->
+        <div class="mb-4" data-mdb-input-init>
+          <label class="form-label" for="password" th:field="*{password}"
+            >Пароль</label
+          >
+
+          <input
+            class="form-control"
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Пароль"
+            aria-describedby="passwordHelpBlock"
+          />
+          <div id="passwordHelpBlock" class="form-text">
+            Хороший пароль должен состоять минимум из 8 символов, а также
+            содержать хотя бы 1 букву, цифру и специальный символ
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col d-flex justify-content-center">
+            <!-- Чекбокс -->
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                th:field="*{enabled}"
+                name="enabled"
+                id="enabled"
+                checked
+              />
+              <label for="enabled" class="form-check-label"
+                >Активировать аккаунт</label
+              >
+            </div>
+          </div>
+
+          <div class="col text-center d-inline-flex">
+            <!-- Выбор варианта -->
+            <label
+              class="col-form-label pe-3"
+              for="select"
+              th:field="*{password}"
+              >Вариант</label
+            >
+            <select class="form-select" th:field="*{variant.id}">
+              <option
+                th:each="variant : ${allVariants}"
+                name="variant"
+                th:value="${variant.id}"
+                th:text="${variant.variant_value}"
+              ></option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Кнопка -->
+        <div class="container-fluid pt-3 text-center">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Добавить пользователя
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Окно подтверждения -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Добавление нового пользователя
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Вы уверены, что хотите добавить нового пользователя? Он сможет
+            просматривать опубликованные работы и... не знаю, не придумал. кто
+            вообще этот текст будет читать? короче много чего он может
+          </div>
+          <div class="modal-footer justify-content-center">
+            <!-- Отмена -->
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Нет, проехали
+            </button>
+
+            <!-- Подтверждение -->
+            <input
+              class="btn btn-primary btn-block"
+              data-mdb-ripple-init
+              type="submit"
+              value="Да, добавить пользователя"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+  </body>
 </html>

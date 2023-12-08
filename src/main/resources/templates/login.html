@@ -1,19 +1,77 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>Spring Security Example </title>
-</head>
-<body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Авторизация</title>
+
+    <link
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+
+    <script>
+      function comingsoon() {
+        alert("Скоро...");
+      }
+    </script>
+  </head>
+
+  <body data-bs-theme="dark">
+    <!--  -->
+
+    <div class="container bg-dark-subtle rounded-5 p-5 mt-5 text-center">
+      <h1>Авторизация</h1>
+
+      <br />
+      <!-- Форма авторизации -->
+      <form th:action="@{/login}" method="post">
+        <!-- Логин -->
+        <div data-mdb-input-init class="form-outline mb-4">
+          <input class="form-control" type="text" name="username" />
+          <label class="form-label">Логин</label>
+        </div>
+
+        <!-- Пароль -->
+        <div data-mdb-input-init class="form-outline mb-4">
+          <input class="form-control" type="password" name="password" />
+          <label class="form-label">Пароль</label>
+        </div>
+
+        <div class="d-inline-flex">
+          <p class="pe-2">Нет аккаунта?</p>
+          <a
+            style="cursor: pointer"
+            onclick="comingsoon()"
+            >Зарегистрируйтесь!</a
+          >
+        </div>
+
+        <!-- Тексты ошибок -->
+        <div class="text-danger" th:if="${param.error}">
+          Неверный логин или пароль!
+        </div>
+        <div class="text-success" th:if="${param.logout}">
+          Вы успешно вышли из аккаунта
+        </div>
+
+        <!-- Кнопка входа -->
+        <div class="p-3">
+          <input
+            class="btn btn-primary btn-block"
+            data-mdb-ripple-init
+            type="submit"
+            value="Войти"
+          />
+        </div>
+      </form>
+    </div>
+
+    <script
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+  </body>
 </html>
