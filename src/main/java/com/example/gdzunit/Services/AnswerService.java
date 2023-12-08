@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AnswerService {
     List<Answer> findAllAnswersBySubjectId(Long id) throws NoAnswersException;
+    List<Answer> findAllAnswersBySubjectName(String name) throws NoAnswersException;
 }

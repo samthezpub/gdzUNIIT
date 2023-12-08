@@ -14,4 +14,7 @@ import java.util.Optional;
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
     @Query("SELECT a FROM Answer a WHERE a.subject.id = :id")
     Optional<List<Answer>> findAllAnswersBySubjectId(@Param("id") Long id);
+
+    @Query("SELECT a FROM Answer a WHERE a.subject.name = :name")
+    Optional<List<Answer>> findAllAnswersBySubjectName(@Param("name") String name);
 }

@@ -20,4 +20,11 @@ public class AnswerServiceImpl implements AnswerService {
     public List<Answer> findAllAnswersBySubjectId(Long id) throws NoAnswersException {
         return answerRepository.findAllAnswersBySubjectId(id).orElseThrow(() -> new NoAnswersException("Нет ответов"));
     }
+
+    @Override
+    public List<Answer> findAllAnswersBySubjectName(String name) throws NoAnswersException {
+        return answerRepository.findAllAnswersBySubjectName(name).orElseThrow(() -> new NoAnswersException("Нет ответов"));
+    }
+
+
 }

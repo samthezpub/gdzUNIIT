@@ -25,17 +25,19 @@ public class AnswerController {
         this.answerService = answerService;
     }
 
-    @GetMapping("/get")
-    public String showAnswersBySubjectId(@RequestParam("id") Long id, Model model){
+    @GetMapping("/getanswers")
+    public String showAnswersBySubjectId(@RequestParam("subject") String subject, Model model){
         try {
-            List<Answer> allAnswersBySubjectId = answerService.findAllAnswersBySubjectId(id);
-            allAnswersBySubjectId.forEach((s) -> {
+            List<Answer> allAnswersBySubjectName = answerService.findAllAnswersBySubjectName(subject);
+            allAnswersBySubjectName.forEach((s) -> {
                 log.info(s.toString());
             });
-            model.addAttribute("answers", allAnswersBySubjectId);
+            model.addAttribute("answers", allAnswersBySubjectName);
         } catch (NoAnswersException e) {
             throw new RuntimeException(e);
         }
         return "answers";
     }
+
+
 }
