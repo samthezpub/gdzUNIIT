@@ -38,7 +38,7 @@ public class AnswerController {
             });
             model.addAttribute("answers", allAnswersBySubjectName);
         } catch (NoAnswersException e) {
-            throw new RuntimeException(e);
+            model.addAttribute("error", e.getMessage());
         }
         return "answers";
     }
