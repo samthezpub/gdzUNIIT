@@ -22,109 +22,124 @@
     />
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg">
+  <body data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
+        <!-- Логотип -->
+        <a class="navbar-brand" href="/">
+          <img
+            src="../static/images/testicon.png"
+            th:src="@{/images/testicon.png}"
+            alt="Логотип"
+            width="32"
+            class="d-inline-block align-text-top me-2"
+          />
+          ГДЗ УНИИТ
+        </a>
+
         <button
-          data-mdb-collapse-init
           class="navbar-toggler"
           type="button"
-          data-mdb-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <i class="fas fa-bars"></i>
+          <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <a class="navbar-brand mt-2 mt-lg-0" href="#">
-            <img
-              src="images/testicon.png"
-              height="15"
-              alt="Иконка сайта"
-              loading="lazy"
-            />
-          </a>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Элементы меню -->
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Главная</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Категории</a>
             </li>
-
             <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
             <li class="nav-item">
-              <a class="nav-link" href="#">Панель модератора</a>
+              <a class="nav-link active" aria-current="page" href="#"
+                >Панель модератора</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true"
+                >Бесплатная активация</a
+              >
             </li>
           </ul>
-        </div>
 
-        <div class="d-flex align-items-center">
-          <a class="text-reset me-3" href="#">
-            <i class="fas fa-shopping-cart"></i>
-          </a>
-
-          <!-- Уведомления -->
-          <div class="dropdown">
-            <a
-              data-mdb-dropdown-init
-              class="text-reset me-3 dropdown-toggle hidden-arrow"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              aria-expanded="false"
-            >
-              <i class="fas fa-bell"></i>
-
-              <!-- Для икноки о новых сообщениях -->
-              <span class="badge rounded-pill badge-notification bg-danger"
-                >-1</span
+          <!-- Уведомления и аватарка -->
+          <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+              <a
+                data-bs-toggle="dropdown"
+                class="text-reset dropdown-toggle hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                aria-expanded="false"
               >
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a class="dropdown-item" href="#">Оповещения</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Потом придумаю</a>
-              </li>
-            </ul>
-          </div>
-          <!-- Avatar -->
-          <div class="dropdown">
-            <a
-              data-mdb-dropdown-init
-              class="dropdown-toggle d-flex align-items-center hidden-arrow"
-              href="#"
-              id="navbarDropdownMenuAvatar"
-              role="button"
-              aria-expanded="false"
-            >
-              <img
-                src="images/testavatar.png"
-                class="rounded-circle"
-                height="25"
-                alt="Фото профиля"
-                loading="lazy"
-              />
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuAvatar"
-            >
-              <li>
-                <a class="dropdown-item" href="#">Мой профиль</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Настройки</a>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#">Выйти</a>
-              </li>
-            </ul>
+                <i class="fas fa-bell"></i>
+                <!-- Для икноки о новых сообщениях -->
+                <span
+                  class="position-absolute translate-middle badge rounded-pill bg-danger"
+                  >-1
+                  <span class="visually-hidden">Непрочитанных СМС</span>
+                </span>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Оповещения</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Потом придумаю</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <a
+                data-bs-toggle="dropdown"
+                class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuAvatar"
+                role="button"
+                aria-expanded="false"
+              >
+                <img
+                  src="../static/images/testavatar.png"
+                  th:src="@{/images/testavatar.png}"
+                  class="rounded-circle"
+                  height="25"
+                  alt="Фото профиля"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuAvatar"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Мой профиль</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Настройки</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="/logout">Выйти</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -144,7 +159,8 @@
           >
             <div class="d-flex align-items-center col">
               <img
-                src="images/testavatar.png"
+                src="../static/images/testavatar.png"
+                th:src="@{/images/testavatar.png}"
                 alt="Фото профиля"
                 style="width: 45px; height: 45px"
                 class="rounded-circle"
@@ -159,11 +175,11 @@
                     Плашка "в сети"
 
                     Использование:
-                    - badge-success - в сети
-                    - bg-gradient - не в сети
-                    - badge-danger - забанен
+                    - text-bg-success - в сети
+                    - text-bg-secondary - не в сети
+                    - text-bg-danger - забанен
                    -->
-                  <span class="badge rounded-pill m-auto badge-success"
+                  <span class="badge rounded-pill m-auto text-bg-success"
                     >Онлайн</span
                   >
                 </div>

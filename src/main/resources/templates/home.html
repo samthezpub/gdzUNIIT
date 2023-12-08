@@ -1,61 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Title</title>
 
     <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
 
     <link
-            rel="stylesheet"
-            href="../static/css/bootstrap.min.css"
-            th:href="@{/css/bootstrap.min.css}"
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
     />
 
-    <link rel="stylesheet" th:href="@{/css/card.css}">
-</head>
+    <link rel="stylesheet" th:href="@{/css/card.css}" />
+  </head>
 
-<!-- data-bs-theme="dark" - делает тёмную тему
+  <!-- data-bs-theme="dark" - делает тёмную тему
   см. документацию Bootstrap
   https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode -->
-<body data-bs-theme="dark">
-<div class="text-center bg-dark-subtle p-5 rounded-5 m-5">
-    <h1 class="p-3">ну типа это, ты вошёл окда</h1>
+  <body data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <!-- Логотип -->
+        <a class="navbar-brand" href="/">
+          <img
+            src="../static/images/testicon.png"
+            th:src="@{/images/testicon.png}"
+            alt="Логотип"
+            width="32"
+            class="d-inline-block align-text-top me-2"
+          />
+          ГДЗ УНИИТ
+        </a>
 
-    <div class="card-container">
-        <div class="card" th:each="subject : ${subjects}"
-             style=                 'width: 25%;
-                                    background: url("/images/testicon.png") no-repeat center; background-size: cover'>
-            <a th:href="@{/answers/getanswers(subject=${subject.name})}">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${subject.getName()}">
-                        Card title
-                    </h5>
-                </div>
-            </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Элементы меню -->
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Категории</a>
+            </li>
+            <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                >Панель модератора</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true"
+                >Бесплатная активация</a
+              >
+            </li>
+          </ul>
+
+          <!-- Уведомления и аватарка -->
+          <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+              <a
+                data-bs-toggle="dropdown"
+                class="text-reset dropdown-toggle hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                aria-expanded="false"
+              >
+                <i class="fas fa-bell"></i>
+                <!-- Для икноки о новых сообщениях -->
+                <span
+                  class="position-absolute translate-middle badge rounded-pill bg-danger"
+                  >-1
+                  <span class="visually-hidden">Непрочитанных СМС</span>
+                </span>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Оповещения</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Потом придумаю</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <a
+                data-bs-toggle="dropdown"
+                class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuAvatar"
+                role="button"
+                aria-expanded="false"
+              >
+                <img
+                  src="../static/images/testavatar.png"
+                  th:src="@{/images/testavatar.png}"
+                  class="rounded-circle"
+                  height="25"
+                  alt="Фото профиля"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuAvatar"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Мой профиль</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Настройки</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="/logout">Выйти</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
+    </nav>
+
+    <div class="text-center bg-dark-subtle p-5 rounded-5 m-5">
+      <h1 class="p-3">ну типа это, ты вошёл окда</h1>
+
+      <div class="card-container">
+        <div
+          class="card"
+          th:each="subject : ${subjects}"
+          style="
+            width: 25%;
+            background: url('/images/testicon.png') no-repeat center;
+            background-size: cover;
+          "
+        >
+          <a th:href="@{/answers/getanswers(subject=${subject.name})}">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${subject.getName()}">
+                Card title
+              </h5>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <br />
+
+      <a href="/logout">
+        <div class="text-center">Выйти</div>
+      </a>
     </div>
 
-    <br/>
-
-    <a href="/logout">
-        <div class="text-center">Выйти</div>
-    </a>
-</div>
-
-<!-- Скрипт -->
-<script
-        src="../static/js/bootstrap.bundle.min.js"
-        th:src="@{/js/bootstrap.bundle.min.js}"
-></script>
-</body>
+    <!-- Скрипт -->
+    <script
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+  </body>
 </html>

@@ -11,8 +11,6 @@
       href="../static/css/bootstrap.min.css"
       th:href="@{/css/bootstrap.min.css}"
     />
-    <!-- Скрипт -->
-    <script th:src="@{/js/mdb.umd.min.js}"></script>
 
     <script>
       function comingsoon() {
@@ -21,7 +19,7 @@
     </script>
   </head>
 
-  <body>
+  <body data-bs-theme="dark">
     <!--  -->
 
     <div class="container bg-dark-subtle rounded-5 p-5 mt-5 text-center">
@@ -44,7 +42,9 @@
 
         <div class="d-inline-flex">
           <p class="pe-2">Нет аккаунта?</p>
-          <a style="cursor: pointer" onclick="comingsoon()"
+          <a
+            style="cursor: pointer"
+            onclick="comingsoon()"
             >Зарегистрируйтесь!</a
           >
         </div>
