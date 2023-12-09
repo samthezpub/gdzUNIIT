@@ -148,14 +148,17 @@
     <main class="mt-5">
       <h1 class="text-center mb-5">Страница модератора</h1>
 
-      <div class="container border rounded-5 pb-3">
+      <div class="container border rounded-4 pb-3">
         <h5 class="text-center p-3">Список пользователей</h5>
 
         <!-- Сам список -->
-        <ul class="list-group list-group-light">
+        <ul
+          class="list-group list-group-light"
+          th:each="user : ${allUsersList}"
+        >
           <!-- карточка пользователя -->
           <li
-            class="d-flex justify-content-between align-items-center border rounded-5 mb-3 p-3 row ms-1 me-1"
+            class="d-flex justify-content-between align-items-center border rounded-4 mb-3 p-3 row ms-1 me-1"
           >
             <div class="d-flex align-items-center col">
               <img
@@ -169,7 +172,9 @@
               <div class="ms-3">
                 <!-- Строка: логин, плашка "в сети" -->
                 <div class="d-inline-flex">
-                  <p class="mb-0 pe-3">RyanGosling</p>
+                  <p class="mb-0 pe-3" th:text="${user.username}">
+                    Имя пользователя
+                  </p>
 
                   <!-- 
                     Плашка "в сети"
@@ -186,7 +191,13 @@
 
                 <div class="d-flex">
                   <p class="text-muted mb-0 pe-2">Вариант:</p>
-                  <p class="mb-0" id="userVariant">123</p>
+                  <p
+                    class="mb-0"
+                    id="userVariant"
+                    th:text="${user.getVariant().getVariant_value()}"
+                  >
+                    123
+                  </p>
                 </div>
               </div>
             </div>
