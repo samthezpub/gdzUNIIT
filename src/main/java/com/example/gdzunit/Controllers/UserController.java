@@ -55,13 +55,7 @@ public class UserController {
         User currentUser = userService.getCurrentUser();
 
         model.addAttribute("user", currentUser);
-
-        if (currentUser.isEnabled()) {
-            model.addAttribute("isUserEnabled", "Да");
-        } else {
-            model.addAttribute("isUserEnabled", "Нет");
-        }
-
+        model.addAttribute("isUserEnabled", currentUser.isEnabled());
         model.addAttribute("userVariant", currentUser.getVariant());
 
         return "userinfo";

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <form method="POST" th:action="@{/registration}">
+            <label for="username">Логин</label>
+            <input name="username" id="username">
+
+            <label for="password">Пароль</label>
+            <input name="password" id="password">
+
+            <label for="variant">Вариант</label>
+<!--            сколько элементов в бд, столько добавит optionов,-->
+<!--            в option отображается значение variant_value, -->
+<!--            а в post отправляется id варианта!-->
+            <select name="variant" id="variant">
+                <option th:each="variant : ${variants}" th:text="${variant.getVariant_value()}"  th:value="${variant.getId()}"></option>
+            </select>
+
+            <input type="submit" value="Зарегистрироваться">
+        </form>
+    </body>
+</html>
