@@ -21,7 +21,8 @@ public class Variant {
     private Short variant_value;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "variant", cascade = CascadeType.MERGE)
-    private Set<User> users;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

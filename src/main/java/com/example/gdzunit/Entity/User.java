@@ -31,9 +31,7 @@ public class User implements UserDetails {
     @Column(name="password")
     private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.MERGE)
-    @JoinColumn(name = "variant_id")
+    @OneToOne(mappedBy = "user")
     private Variant variant;
 
     @ManyToMany(fetch = FetchType.EAGER)
