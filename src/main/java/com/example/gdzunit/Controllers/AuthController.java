@@ -36,9 +36,15 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String getRegistrationPage(Model model){
+    public String getRegistrationPage(@RequestParam(required = false) String success ,Model model){
+        // Вытягиваем варианты из бд и помещаем их в модель
         List<Variant> variants = variantService.findAll();
         model.addAttribute("variants", variants);
+
+        if (success != null){
+            model.addAttribute("success", success);
+        }
+
 
         return "registration";
     }

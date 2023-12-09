@@ -5,7 +5,7 @@
         <title>Title</title>
     </head>
     <body>
-        <form method="POST" th:action="@{/registration}">
+        <form method="POST" th:if="${success == null}" th:action="@{/registration}">
             <label for="username">Логин</label>
             <input name="username" id="username">
 
@@ -22,5 +22,9 @@
 
             <input type="submit" value="Зарегистрироваться">
         </form>
+
+    <div th:if="${success}">
+        <p>Вы успешно зарегистрированы!</p>
+    </div>
     </body>
 </html>
