@@ -1,7 +1,6 @@
 package com.example.gdzunit.Controllers;
 
 import com.example.gdzunit.Entity.Subject;
-import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Services.impl.SubjectServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
