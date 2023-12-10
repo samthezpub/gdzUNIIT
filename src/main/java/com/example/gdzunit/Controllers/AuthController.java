@@ -58,12 +58,13 @@ public class AuthController {
     @PostMapping("/registration")
     public String register(@ModelAttribute("user")User user){
         user.setEnabled(true);
-
-
         user.setRoles(roleService.getUserRole());
-
-
         userService.saveUser(user);
+
+        variantService.addVariant(new Variant(user.getVariant().getVariant_value(), user));
+
+
+
 
         return "redirect:/registration?success";
     }
