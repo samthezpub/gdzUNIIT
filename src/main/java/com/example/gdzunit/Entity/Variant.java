@@ -25,4 +25,11 @@ public class Variant {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Variant() {
+    }
+
+    public Variant(Short variant_value, User user) {
+        this.variant_value = variant_value;
+        this.user = user;
+    }
 }

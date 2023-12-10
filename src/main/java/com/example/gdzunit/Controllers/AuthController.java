@@ -1,7 +1,9 @@
 package com.example.gdzunit.Controllers;
 
+import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Entity.Variant;
+import com.example.gdzunit.Services.impl.RoleServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import com.example.gdzunit.Services.impl.VariantServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -11,17 +13,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class AuthController {
 
     private final UserServiceImpl userService;
     private final VariantServiceImpl variantService;
+    private final RoleServiceImpl roleService;
 
-    public AuthController(UserServiceImpl userService, VariantServiceImpl variantService) {
+    public AuthController(UserServiceImpl userService, VariantServiceImpl variantService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.variantService = variantService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/logout")
@@ -51,6 +57,12 @@ public class AuthController {
 
     @PostMapping("/registration")
     public String register(@ModelAttribute("user")User user){
+        user.setEnabled(true);
+
+
+        user.setRoles(roleService.getUserRole());
+
+
         userService.saveUser(user);
 
         return "redirect:/registration?success";
