@@ -61,8 +61,6 @@ public class AuthController {
         user.setRoles(roleService.getUserRole());
         userService.saveUser(user);
 
-        variantService.addVariant(new Variant(user.getVariant().getVariant_value(), user));
-
 
 
 
