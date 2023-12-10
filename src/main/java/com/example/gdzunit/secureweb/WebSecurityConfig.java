@@ -61,6 +61,7 @@ public class WebSecurityConfig {
                 .authorizeRequests((requests) -> requests
                         .requestMatchers("/", "/home").authenticated()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/src/**").permitAll()
+                        .requestMatchers("/registration**", "/registration").permitAll()
                         .anyRequest().authenticated()
                 )
 
