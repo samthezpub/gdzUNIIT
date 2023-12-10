@@ -23,7 +23,11 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public List<Answer> findAllAnswersBySubjectNameAndVariant(String name, Short variant) throws NoAnswersException {
-        return answerRepository.findAllAnswersBySubjectNameAndVariant(name, variant).orElseThrow(() -> new NoAnswersException("Нет ответов"));
+        List<Answer> answers = answerRepository.findAllAnswersBySubjectNameAndVariant(name, variant).get();
+        if (answers.size()==0){
+            throw new NoAnswersException("Пока нет ответов...");
+        }
+        return answers;
     }
 
     @Override
