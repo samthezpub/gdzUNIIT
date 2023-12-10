@@ -50,13 +50,20 @@ public class UserController {
         return "redirect:/user/add"; // Перенаправление на GET-метод
     }
 
-    @GetMapping("/user/profile")
-    public String showProfile(Model model){
+    @GetMapping("/me")
+    public String showProfile(@RequestParam(required = false) String success, @RequestParam(required = false) String fileSizeError,Model model){
         User currentUser = userService.getCurrentUser();
 
         model.addAttribute("user", currentUser);
         model.addAttribute("isUserEnabled", currentUser.isEnabled());
         model.addAttribute("userVariant", currentUser.getVariant());
+
+
+        if (success != null) {
+            model.addAttribute("success", success);
+        } else {
+            model.addAttribute("fileSizeError", fileSizeError);
+        }
 
         return "userinfo";
     }
