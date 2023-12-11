@@ -10,6 +10,7 @@ public interface AnswerService {
     void addAnswer(Answer answer);
     List<Answer> findAllAnswersBySubjectId(Long id) throws NoAnswersException;
     List<Answer> findAllAnswersBySubjectNameAndVariant(String name, Short variant) throws NoAnswersException;
+    void updateAnswer(Answer answer);
 
     Answer findAnswerByAnswerTitle(String title) throws NoAnswersException;
 }

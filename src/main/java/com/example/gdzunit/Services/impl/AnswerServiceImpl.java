@@ -38,6 +38,11 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public void updateAnswer(Answer answer) {
+        answerRepository.save(answer);
+    }
+
+    @Override
     public Answer findAnswerByAnswerTitle(String title) throws NoAnswersException {
         return answerRepository.findAnswerByAnswerTitle(title).orElseThrow(() -> new NoAnswersException("Нет ответа"));
     }

@@ -9,6 +9,9 @@ import com.example.gdzunit.Services.impl.SubjectServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import com.example.gdzunit.Services.impl.VariantServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +56,9 @@ public class AnswerController {
     public String getAddAnswer(Model model){
         model.addAttribute("variants", variantService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
+
+        model.addAttribute("answer", new Answer());
+
         return "addAnswer";
     }
 
@@ -62,6 +68,11 @@ public class AnswerController {
     public String addAnswer(@ModelAttribute("answer") Answer answer, Model model){
         System.out.println(answer);
         answerService.addAnswer(answer);
+
+        answer.setHtml(markdownToHTML(answer.getContent()));
+        model.addAttribute("answer", answer);
+        answerService.updateAnswer(answer);
+
         return "redirect:/answers/addanswer";
     }
 
@@ -81,4 +92,14 @@ public class AnswerController {
         return "showAnswer";
     }
 
+    private String markdownToHTML(String markdown) {
+        Parser parser = Parser.builder()
+                .build();
+
+        Node document = parser.parse(markdown);
+        HtmlRenderer renderer = HtmlRenderer.builder()
+                .build();
+
+        return renderer.render(document);
+    }
 }

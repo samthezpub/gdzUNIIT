@@ -44,7 +44,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/src/**").permitAll()
                         .requestMatchers("/registration**", "/register").permitAll()
                         .requestMatchers("file:///D:/Projects/Java/gdzUnit/uploads/avatars/**").permitAll()
-                        .requestMatchers("/user/add", "/moderation**", "/getanswers/addAnswer**").hasAuthority("ADMIN")
+                        .requestMatchers("/user/add", "/moderation**", "/getanswers/addAnswer").permitAll()
+                        //.requestMatchers("/user/add", "/moderation**", "/getanswers/addAnswer**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
 
