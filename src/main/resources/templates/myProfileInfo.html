@@ -121,8 +121,9 @@
               >
                 <img
                   src="../static/images/testavatar.png"
-                  th:src="@{/images/testavatar.png}"
+                  th:src="@{'/uploads/avatars/' + ${user.getAvatarURL()}}"
                   class="rounded-circle"
+                  width="25"
                   height="25"
                   alt="Фото профиля"
                   loading="lazy"
@@ -199,14 +200,12 @@
       <!-- Главное о пользователе -->
       <div class="container-fluid d-inline-flex">
         <!-- Аватарка -->
-        <div style="width: 7rem; height: 7rem">
-          <!-- ОБЯЗАТЕЛЬНО ПОТОМ УБРАТЬ TESTAVATAR!!! -->
+        <div style="width: 128px; height: 128px">
           <img
             class="rounded-circle img-fluid"
             src="../static/images/testavatar.png"
-            th:src="@{/images/testavatar.png}"
-            width="100%"
-            height="100%"
+            th:src="@{'/uploads/avatars/' + ${user.getAvatarURL()}}"
+            style="width:100%; height:100%;"
           />
         </div>
 

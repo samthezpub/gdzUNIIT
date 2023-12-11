@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-//Это энтити с полями id, variant_value, users
+//Это энтити с полями id, variant_value
 public class Variant {
 
     @Id

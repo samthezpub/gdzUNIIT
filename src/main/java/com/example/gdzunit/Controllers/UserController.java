@@ -7,6 +7,7 @@ import com.example.gdzunit.Services.impl.VariantServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -51,13 +52,13 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public String showProfile(@RequestParam(required = false) String success, @RequestParam(required = false) String fileSizeError,Model model){
+    public String showProfile(@RequestParam(required = false) String success, @RequestParam(required = false) String fileSizeError,  MultipartFile file, Model model){
         User currentUser = userService.getCurrentUser();
 
         model.addAttribute("user", currentUser);
         model.addAttribute("isUserEnabled", currentUser.isEnabled());
         model.addAttribute("userVariant", currentUser.getVariant());
-
+        model.addAttribute("avatar", currentUser.getAvatarURL());
 
         if (success != null) {
             model.addAttribute("success", success);
