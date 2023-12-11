@@ -53,13 +53,11 @@
         </div>
 
         <div class="d-inline-flex mb-4">
-          <label for="variant" for="select" class="col-form-label pe-3"
-            >Вариант</label
-          >
+          <label class="form-label pe-3" for="select">Вариант</label>
           <!--            сколько элементов в бд, столько добавит optionов,-->
           <!--            в option отображается значение variant_value, -->
           <!--            а в post отправляется id варианта!-->
-          <select class="form-select" name="variant" id="variant">
+          <select name="form-select variant" id="variant">
             <option
               th:each="variant : ${variants}"
               th:text="${variant.getVariant_value()}"
@@ -73,7 +71,7 @@
             <p class="pe-2">Уже зарегистрированы?</p>
             <a
               style="cursor: pointer"
-              th:href="@{/register}"
+              th:href="@{/login}"
               th:text="Авторизуйтесь"
             />
           </div>
