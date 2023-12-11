@@ -1,5 +1,6 @@
 package com.example.gdzunit.Controllers;
 
+import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Services.UserService;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +24,9 @@ public class UploadController {
     @Autowired
     private UserServiceImpl userService;
 
-    private static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
-    private static String UPLOAD_DIRECTORY_AVATARS = UPLOAD_DIRECTORY + "/avatars";
-    private static String UPLOAD_DIRECTORY_ANSWERS = UPLOAD_DIRECTORY + "/answers";
+    private static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "\\uploads";
+    private static String UPLOAD_DIRECTORY_AVATARS = UPLOAD_DIRECTORY + "\\avatars";
+    private static String UPLOAD_DIRECTORY_ANSWERS = UPLOAD_DIRECTORY + "\\answers";
 
     public UploadController() throws IOException {
         Files.createDirectories(Paths.get(UPLOAD_DIRECTORY));
@@ -38,11 +39,17 @@ public class UploadController {
     public String uploadImage(Model model, @RequestParam("image") MultipartFile file) throws IOException {
         StringBuilder fileNames = new StringBuilder();
 
-        String newFileName = userService.getCurrentUser().getUsername() + ".jpg";
+        User currentUser = userService.getCurrentUser();
+        String newFileName = currentUser.getUsername() + ".jpg";
         Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY_AVATARS, newFileName);
+
 
         fileNames.append(newFileName);
         Files.write(fileNameAndPath, file.getBytes());
+
+        // Устанавливаем аватар юзеру и обновляем
+        currentUser.setAvatarURL(newFileName);
+        userService.updateUser(currentUser);
 
         model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
 

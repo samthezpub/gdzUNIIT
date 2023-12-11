@@ -30,7 +30,10 @@ public class AnswerController {
 
     @GetMapping("/getanswers")
     public String showAnswerListBySubjectId(@RequestParam("subject") String subject, Model model){
-        Short variantValue = userService.getCurrentUser().getVariant().getVariant_value();
+        Short variantValue =
+                userService.getCurrentUser().getVariant().getVariant_value();
+
+        log.debug(variantValue.toString());
         try {
             List<Answer> allAnswersBySubjectName = answerService.findAllAnswersBySubjectNameAndVariant(subject, variantValue);
             allAnswersBySubjectName.forEach((s) -> {
