@@ -43,14 +43,18 @@
       <form method="POST" th:if="${success == null}" th:action="@{/register}">
         <!-- Логин -->
         <div data-mdb-input-init class="form-outline mb-4">
-          <input class="form-control" type="text" name="username" />
           <label class="form-label">Логин</label>
+          <input class="form-control" type="text" name="username" />
         </div>
 
         <!-- Пароль -->
         <div data-mdb-input-init class="form-outline mb-4">
-          <input class="form-control" type="password" name="password" />
           <label class="form-label">Пароль</label>
+          <input class="form-control" type="password" name="password" />
+          <div id="passwordHelpBlock" class="form-text text-start">
+            Хороший пароль должен состоять минимум из 8 символов, а также
+            содержать хотя бы 1 букву, цифру и специальный символ
+          </div>
         </div>
 
         <div class="d-inline-flex mb-4">
