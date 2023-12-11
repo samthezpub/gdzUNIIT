@@ -24,7 +24,7 @@
   <body data-bs-theme="dark">
     <form
       class="container bg-dark-subtle p-3 rounded-3 text-center mt-3"
-      action="/addanswer"
+      th:action="@{/answers/addanswer}"
       method="post"
     >
       <h1 class="pb-3">Добавить ответ</h1>
@@ -32,6 +32,7 @@
       <div class="mb-4">
         <label for="answerTitle" class="form-label">Заголовок ответа</label>
         <input
+                name="title"
           placeholder="Заголовок ответа"
           class="form-control"
           id="answerTitle"
@@ -42,6 +43,7 @@
         <label for="answerText" class="form-label">Текст ответа</label>
         <div class="form-floating">
           <textarea
+                  name="content"
             class="form-control"
             placeholder="Текст ответа"
             id="answerText"
@@ -53,12 +55,11 @@
       <!-- Выбор варианта -->
       <div class="mb-4">
         <div class="text-center d-inline-flex">
-          <label class="form-label pe-3 d-flex align-items-center" for="select" th:field="*{password}"
-            >Вариант</label
+          <label class="form-label pe-3 d-flex align-items-center" for="select">Вариант</label
           >
-          <select class="form-select-sm" th:field="*{variant.id}">
+          <select name="variant" id="select" class="form-select-sm">
             <option
-              th:each="variant : ${allVariants}"
+              th:each="variant : ${variants}"
               name="variant"
               th:value="${variant.id}"
               th:text="${variant.variant_value}"
@@ -69,19 +70,15 @@
 
       <!-- Список предметов -->
       <div class="text-center mb-4">
-        <label for="exampleDataList" class="form-label">Выберите предмет</label>
-        <input
-          class="form-control"
-          list="datalistOptions"
-          id="exampleDataList"
-          placeholder="Предмет..."
-        />
-        <datalist id="datalistOptions">
+        <label for="datalistOptions">Предмет</label>
+
+        <select name="subject" id="datalistOptions">
           <option
             th:each="subject : ${subjects}"
-            th:text="${subject.title}"
+            th:value="${subject.id}"
+            th:text="${subject.name}"
           ></option>
-        </datalist>
+        </select>
       </div>
 
       <button type="submit" class="btn btn-primary">

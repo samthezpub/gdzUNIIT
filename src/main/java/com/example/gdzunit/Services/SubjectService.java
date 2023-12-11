@@ -7,4 +7,6 @@ import java.util.List;
 public interface SubjectService {
     void addSubject(Subject subject);
     List<Subject> findAll();
+
+    boolean checkIsHave(String subject);
 }

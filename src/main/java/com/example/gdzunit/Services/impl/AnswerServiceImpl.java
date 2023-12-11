@@ -12,8 +12,15 @@ import java.util.List;
 public class AnswerServiceImpl implements AnswerService {
     private final AnswerRepository answerRepository;
 
+
     public AnswerServiceImpl(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
+    }
+
+
+    @Override
+    public void addAnswer(Answer answer) {
+        answerRepository.save(answer);
     }
 
     @Override

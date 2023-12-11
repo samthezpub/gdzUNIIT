@@ -27,7 +27,7 @@
   <!-- data-bs-theme="dark" - делает тёмную тему
 см. документацию Bootstrap
 https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode -->
-  <body data-bs-theme="dark">
+  <body data-bs-theme="dark" style="position: relative; height: 100vh" >
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <!-- Логотип -->
@@ -184,6 +184,15 @@ https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode -->
         <p th:text="${error}">132</p>
       </div>
     </div>
+
+    <a th:href="@{/answers/addanswer}">
+      <div style="position: absolute; bottom: 20px; right: 1%">
+        <div style="border-radius: 1000px;background: #0a58ca; width: 64px;height: 64px;display: flex;justify-content: center;
+      align-items: center;">
+            <span style="font-size: 2em; margin-bottom: 6px">+</span>
+        </div>
+      </div>
+    </a>
 
     <!-- Скрипты для работы всяких приколов -->
     <script

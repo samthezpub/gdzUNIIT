@@ -23,4 +23,17 @@ public class SubjectServiceImpl implements SubjectService {
     public List<Subject> findAll() {
         return subjectRepository.findAll();
     }
+
+    @Override
+    public boolean checkIsHave(String subject) {
+        return subjectRepository.findAll()
+                .stream()
+                .filter(subject1 -> subject1.getName().equals(subject))
+                .findFirst()
+                .isEmpty();
+    }
+
+    // Проверить есть ли предмет по названию
+
+
 }

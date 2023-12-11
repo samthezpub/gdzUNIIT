@@ -6,6 +6,8 @@ import com.example.gdzunit.Exceptions.NoAnswersException;
 import java.util.List;
 
 public interface AnswerService {
+
+    void addAnswer(Answer answer);
     List<Answer> findAllAnswersBySubjectId(Long id) throws NoAnswersException;
     List<Answer> findAllAnswersBySubjectNameAndVariant(String name, Short variant) throws NoAnswersException;
 
