@@ -1,30 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-        <form method="POST" th:if="${success == null}" th:action="@{/register}">
-            <label for="username">Логин</label>
-            <input name="username" id="username">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Регистрация</title>
 
-            <label for="password">Пароль</label>
-            <input name="password" id="password">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
 
-            <label for="variant">Вариант</label>
-<!--            сколько элементов в бд, столько добавит optionов,-->
-<!--            в option отображается значение variant_value, -->
-<!--            а в post отправляется id варианта!-->
-            <select name="variant" id="variant">
-                <option th:each="variant : ${variants}" th:text="${variant.getVariant_value()}"  th:value="${variant.getId()}"></option>
-            </select>
+    <link
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
 
-            <input type="submit" value="Зарегистрироваться">
-        </form>
-
-    <div th:if="${success}">
-        <p>Вы успешно зарегистрированы!</p>
+  <body data-bs-theme="dark">
+    <div
+      th:if="${success}"
+      id="userWarningToast"
+      class="container text-center rounded-3 bg-dark-subtle p-3 mt-4"
+    >
+      <div>
+        <div>
+          <span class="fas fa-check text-success pe-2"></span>
+          Вы <span class="text-success">успешно</span> зарегистрировались!
+        </div>
+      </div>
     </div>
-    </body>
+
+    <div class="container bg-dark-subtle rounded-5 p-5 mt-5 text-center">
+      <h1>Регистрация</h1>
+
+      <br />
+      <!-- Форма авторизации -->
+      <form method="POST" th:if="${success == null}" th:action="@{/register}">
+        <!-- Логин -->
+        <div data-mdb-input-init class="form-outline mb-4">
+          <input class="form-control" type="text" name="username" />
+          <label class="form-label">Логин</label>
+        </div>
+
+        <!-- Пароль -->
+        <div data-mdb-input-init class="form-outline mb-4">
+          <input class="form-control" type="password" name="password" />
+          <label class="form-label">Пароль</label>
+        </div>
+
+        <div class="d-inline-flex mb-4">
+          <label for="variant" for="select" class="col-form-label pe-3"
+            >Вариант</label
+          >
+          <!--            сколько элементов в бд, столько добавит optionов,-->
+          <!--            в option отображается значение variant_value, -->
+          <!--            а в post отправляется id варианта!-->
+          <select class="form-select" name="variant" id="variant">
+            <option
+              th:each="variant : ${variants}"
+              th:text="${variant.getVariant_value()}"
+              th:value="${variant.getId()}"
+            ></option>
+          </select>
+        </div>
+
+        <div>
+          <div class="d-inline-flex">
+            <p class="pe-2">Уже зарегистрированы?</p>
+            <a
+              style="cursor: pointer"
+              th:href="@{/register}"
+              th:text="Авторизуйтесь"
+            />
+          </div>
+        </div>
+
+        <!-- Кнопка входа -->
+        <div class="p-3">
+          <input
+            class="btn btn-primary btn-block"
+            type="submit"
+            value="Зарегистрироваться"
+          />
+        </div>
+      </form>
+    </div>
+
+    <script
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+  </body>
 </html>
