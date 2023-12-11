@@ -65,6 +65,6 @@ public class UserController {
             model.addAttribute("fileSizeError", fileSizeError);
         }
 
-        return "userinfo";
+        return "myProfileInfo";
     }
 }
