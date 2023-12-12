@@ -1,7 +1,9 @@
 package com.example.gdzunit.Controllers;
 
+import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.Subject;
 import com.example.gdzunit.Entity.User;
+import com.example.gdzunit.Services.impl.RoleServiceImpl;
 import com.example.gdzunit.Services.impl.SubjectServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,18 @@ public class MainPageController {
         List<Subject> subjectList = subjectService.findAll();
         User currentUser = userService.getCurrentUser();
 
+        Role adminRole = roleService.getAdminRole();
+
+        model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
+
         model.addAttribute("subjects", subjectList);
         model.addAttribute("user", currentUser);
 
         return "home";
     }
+
+    @Autowired
+    private RoleServiceImpl roleService;
 
     @GetMapping("/")
     public String getMainPage(Model model){

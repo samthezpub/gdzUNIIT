@@ -25,6 +25,10 @@
 </head>
 
 <body data-bs-theme="dark">
+
+<div th:replace="~{nav :: nav}"></div>
+
+
 <form
         class="container bg-dark-subtle p-3 rounded-3 text-center mt-3"
         th:action="@{/answers/addanswer}"

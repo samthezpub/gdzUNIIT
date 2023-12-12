@@ -52,6 +52,9 @@ public class AnswerController {
         } catch (NoAnswersException e) {
             model.addAttribute("error", e.getMessage());
         }
+        finally {
+            model.addAttribute("user", currentUser);
+        }
         return "answers";
     }
 
@@ -60,6 +63,12 @@ public class AnswerController {
     public String getAddAnswer(Model model) {
         model.addAttribute("variants", variantService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
+
+        User currentUser = userService.getCurrentUser();
+        model.addAttribute("user", currentUser);
+
+        Role adminRole = roleService.getAdminRole();
+        model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
 
         model.addAttribute("answer", new Answer());
 
@@ -91,11 +100,13 @@ public class AnswerController {
             // Если вариант юзера равен варианту ответа
             if (currentUser.getVariant().equals(answerByAnswerTitle.getVariant())){
                 model.addAttribute("answer", answerByAnswerTitle);
+                model.addAttribute("user", currentUser);
                 return "showAnswer";
             }
             else {
                 return "403";
             }
+
 
         } catch (NoAnswersException e) {
             log.info("Юзер попытался получить несуществующий ответ: " + title + " Время: " + new Date());

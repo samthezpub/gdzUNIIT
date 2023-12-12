@@ -1,7 +1,9 @@
 package com.example.gdzunit.Controllers;
 
+import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Entity.Variant;
+import com.example.gdzunit.Services.impl.RoleServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import com.example.gdzunit.Services.impl.VariantServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,12 @@ public class UserController {
 
     private final UserServiceImpl userService;
     private final VariantServiceImpl variantService;
+    private final RoleServiceImpl roleService;
 
-    public UserController(UserServiceImpl userService, VariantServiceImpl variantService) {
+    public UserController(UserServiceImpl userService, VariantServiceImpl variantService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.variantService = variantService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/user")
@@ -59,6 +63,11 @@ public class UserController {
         model.addAttribute("isUserEnabled", currentUser.isEnabled());
         model.addAttribute("userVariant", currentUser.getVariant());
         model.addAttribute("avatar", currentUser.getAvatarURL());
+
+        model.addAttribute("user", currentUser);
+
+        Role adminRole = roleService.getAdminRole();
+        model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
 
         if (success != null) {
             model.addAttribute("success", success);

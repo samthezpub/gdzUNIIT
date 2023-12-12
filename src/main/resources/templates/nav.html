@@ -43,8 +43,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Категории</a>
                 </li>
-                <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
-                <li class="nav-item" th:if='${user.getAuthorities().contains("ADMIN")}'>
+<!--                Это требует передачи isUserHaveAdminRole в Model-->
+                <li class="nav-item" th:if='${isUserHaveAdminRole}'>
                     <a class="nav-link" href="/moderation"
                     >Панель модератора</a
                     >
@@ -98,6 +98,7 @@
                             aria-expanded="false"
                     >
 
+<!--                        Это требует передачи currentUser в Model-->
                         <!--                БЛОК ДЛЯ КОПИРОВАНИЯ img В nav-->
                         <img th:if="${user.getAvatarURL() == null}"
                              src="../static/images/testavatar.png"
