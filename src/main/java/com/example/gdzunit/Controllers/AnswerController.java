@@ -47,7 +47,7 @@ public class AnswerController {
 
         log.debug(variantValue.toString());
         try {
-            List<Answer> allAnswersBySubjectName = answerService.findAllAnswersBySubjectNameAndVariant(subject, variantValue);
+            List<Answer> allAnswersBySubjectName = answerService.findAllAnswers(subject, variantValue);
             model.addAttribute("answers", allAnswersBySubjectName);
         } catch (NoAnswersException e) {
             model.addAttribute("error", e.getMessage());

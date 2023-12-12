@@ -19,6 +19,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     @Query("SELECT a FROM Answer a WHERE a.subject.name = :name AND a.variant.variant_value= :variant")
     Optional<List<Answer>> findAllAnswersBySubjectNameAndVariant(@Param("name") String name, @Param("variant") Short variant);
 
+    @Query("SELECT a FROM Answer a WHERE a.subject.name = :name AND a.isForAllVariants = true")
+    Optional<List<Answer>> findAllAnswersBySubjectNameWhichForAllVariants(@Param("name") String name);
+
     @Query("SELECT a FROM Answer a WHERE a.title= :title")
     Optional<Answer> findAnswerByAnswerTitle(@Param("title") String title);
 }
