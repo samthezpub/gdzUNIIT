@@ -156,7 +156,6 @@
 
     <div
       th:if="${success}"
-      id="userWarningToast"
       class="container-fluid text-center rounded-3 bg-dark-subtle p-3 mt-2"
     >
       <div class="d-flex">
@@ -164,18 +163,16 @@
           <span class="fas fa-check text-success pe-2"></span>
           Аватар <span class="text-success">успешно</span> загружен!
         </div>
-        <button
-          type="button"
+        <a
+          href="/me"
           class="btn-close btn-close-white me-2 m-auto"
-          onclick="hideUserWarningToast()"
           aria-label="Закрыть"
-        ></button>
+        ></a>
       </div>
     </div>
 
     <div
       th:if="${fileSizeError}"
-      id="userWarningToast"
       class="container-fluid text-center rounded-3 bg-dark-subtle p-3 mt-2"
     >
       <div class="d-flex">
@@ -184,12 +181,11 @@
           Размер загружаемого изображения превышает
           <span class="text-danger">допустимый лимит</span>
         </div>
-        <button
-          type="button"
+        <a
+          href="/me"
           class="btn-close btn-close-white me-2 m-auto"
-          onclick="hideUserWarningToast()"
           aria-label="Закрыть"
-        ></button>
+        ></a>
       </div>
     </div>
 
@@ -347,24 +343,5 @@
       src="../static/js/bootstrap.bundle.min.js"
       th:src="@{/js/bootstrap.bundle.min.js}"
     ></script>
-    <script>
-      function hideUserWarningToast() {
-        const toast = document.querySelector("#userWarningToast");
-        toast.style.display = "none";
-      }
-
-      document.getElementById("imgInput").onchange = function (e) {
-        let reader = new FileReader();
-
-        reader.onload = function (event) {
-          document.getElementById("imgPreview").src = event.target.result;
-          document
-            .getElementById("imgPreviewDiv")
-            .classList.remove("visually-hidden");
-        };
-
-        reader.readAsDataURL(e.target.files[0]);
-      };
-    </script>
   </body>
 </html>

@@ -40,7 +40,8 @@ public class WebSecurityConfig {
 
         http
                 .authorizeRequests((requests) -> requests
-                        .requestMatchers("/", "/home").authenticated()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/home").authenticated()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/src/**").permitAll()
                         .requestMatchers("/registration**", "/register").permitAll()
                         .requestMatchers("file:///D:/Projects/Java/gdzUnit/uploads/avatars/**").permitAll()
@@ -56,7 +57,7 @@ public class WebSecurityConfig {
                 )
                 .logout((logout) ->
                         logout.permitAll()
-                                .logoutSuccessUrl("/login")
+                                .logoutSuccessUrl("/")
                 );
 
         return http.build();

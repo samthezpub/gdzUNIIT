@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Главная</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+  <body data-bs-theme="dark">
+    <div class="container bg-dark-subtle rounded-3 p-3 mt-4 text-center">
+      <h1>Главная страница</h1>
+      <div>
+        <a href="/login" class="btn btn-outline-primary m-2">Войти</a>
+        <a href="/register" class="btn btn-outline-primary">
+          Зарегистрироваться
+        </a>
+      </div>
+    </div>
+
+    <!-- Скрипт -->
+    <script
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+  </body>
+</html>
