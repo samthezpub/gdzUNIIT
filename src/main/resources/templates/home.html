@@ -68,7 +68,7 @@
             </li>
             <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
             <li class="nav-item">
-              <a class="nav-link" href="#"
+              <a class="nav-link" href="/moderation"
                 >Панель модератора</a
               >
             </li>
@@ -120,11 +120,14 @@
                 role="button"
                 aria-expanded="false"
               >
+
+<!--                БЛОК ДЛЯ КОПИРОВАНИЯ img В nav-->
                 <img
                   src="../static/images/testavatar.png"
-                  th:src="@{/images/testavatar.png}"
+                  th:src="@{'/uploads/avatars/' + ${user.getAvatarURL()}}"
                   class="rounded-circle"
                   height="25"
+                  width="25"
                   alt="Фото профиля"
                   loading="lazy"
                 />
@@ -134,7 +137,7 @@
                 aria-labelledby="navbarDropdownMenuAvatar"
               >
                 <li>
-                  <a class="dropdown-item" th:href="@{/user/profile}">Мой профиль</a>
+                  <a class="dropdown-item" th:href="@{/me}">Мой профиль</a>
                 </li>
                 <li>
                   <a class="dropdown-item" href="#">Настройки</a>

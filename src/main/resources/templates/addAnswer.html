@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Добавить ответ</title>
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+
+    <link
+            rel="stylesheet"
+            href="../static/css/bootstrap.min.css"
+            th:href="@{/css/bootstrap.min.css}"
+    />
+
+
+    <link th:rel="stylesheet" th:href="@{/css/simplemde.min.css}"/>
+</head>
+
+<body data-bs-theme="dark">
+<form
+        class="container bg-dark-subtle p-3 rounded-3 text-center mt-3"
+        th:action="@{/answers/addanswer}"
+        method="post"
+>
+    <h1 class="pb-3">Добавить ответ</h1>
+
+    <div class="mb-4">
+        <label for="answerTitle" class="form-label">Заголовок ответа</label>
+        <input
+                name="title"
+                placeholder="Заголовок ответа"
+                class="form-control"
+                id="answerTitle"
+        />
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">Текст ответа</label>
+        <div class="form-group text-start">
+            <label for="content">Content:</label>
+            <textarea type="text" rows="4" id="content" placeholder="Content" name="content" class="form-control"
+                      autocomplete="off"></textarea>
+        </div>
+    </div>
+
+    <!-- Выбор варианта -->
+    <div class="mb-4">
+        <div class="text-center d-inline-flex">
+            <label class="form-label pe-3 d-flex align-items-center" for="select">Вариант</label
+            >
+            <select name="variant" id="select" class="form-select-sm">
+                <option
+                        th:each="variant : ${variants}"
+                        name="variant"
+                        th:value="${variant.id}"
+                        th:text="${variant.variant_value}"
+                ></option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Список предметов -->
+    <div class="text-center mb-4">
+        <label for="datalistOptions">Предмет</label>
+
+        <select name="subject" id="datalistOptions">
+            <option
+                    th:each="subject : ${subjects}"
+                    th:value="${subject.id}"
+                    th:text="${subject.name}"
+            ></option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        <span class="fas fa-add pe-2"></span>
+        Добавить
+    </button>
+</form>
+
+
+<script
+        src="../static/js/bootstrap.bundle.min.js"
+        th:src="@{/js/bootstrap.bundle.min.js}"
+></script>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/simplemde.min.js}"></script>
+
+<script>
+    var simplemde = new SimpleMDE({element: document.getElementById("content")});
+</script>
+</body>
+</html>

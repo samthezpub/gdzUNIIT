@@ -1,6 +1,5 @@
 package com.example.gdzunit.Controllers;
 
-import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Entity.Variant;
 import com.example.gdzunit.Services.impl.RoleServiceImpl;
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class AuthController {
@@ -31,7 +28,7 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public String logout(){
+    public String logout() {
         return "logout";
     }
 
@@ -41,13 +38,13 @@ public class AuthController {
         return new User();
     }
 
-    @GetMapping("/registration")
-    public String getRegistrationPage(@RequestParam(required = false) String success ,Model model){
+    @GetMapping("/register")
+    public String getRegistrationPage(@RequestParam(required = false) String success, Model model) {
         // Вытягиваем варианты из бд и помещаем их в модель
         List<Variant> variants = variantService.findAll();
         model.addAttribute("variants", variants);
 
-        if (success != null){
+        if (success != null) {
             model.addAttribute("success", success);
         }
 
@@ -55,17 +52,13 @@ public class AuthController {
         return "registration";
     }
 
-    @PostMapping("/registration")
-    public String register(@ModelAttribute("user")User user){
+    @PostMapping("/register")
+    public String register(@ModelAttribute("user") User user) {
         user.setEnabled(true);
-
-
         user.setRoles(roleService.getUserRole());
-
-
         userService.saveUser(user);
 
-        return "redirect:/registration?success";
-    }
 
+        return "redirect:/register?success";
+    }
 }

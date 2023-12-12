@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Инфо о пользователе</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
+  </head>
+
+  <body data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <!-- Логотип -->
+        <a
+          class="navbar-brand"
+          href="/"
+          style="display: flex; align-items: center"
+        >
+          <img
+            src="../static/images/testicon.png"
+            th:src="@{/images/testicon.png}"
+            alt="Логотип"
+            width="32"
+            class="d-inline-block align-text-top me-2"
+          />
+          <p style="margin: 0">ГДЗ УНИИТ</p>
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Элементы меню -->
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" th:href="@{/}"
+                >Главная</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Категории</a>
+            </li>
+            <!-- TODO: сделать чтобы оно показывалось только юзерам с модеркой -->
+            <li class="nav-item">
+              <a class="nav-link" href="#">Панель модератора</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true"
+                >Бесплатная активация</a
+              >
+            </li>
+          </ul>
+
+          <!-- Уведомления и аватарка -->
+          <div class="d-flex align-items-center">
+            <div class="dropdown me-3">
+              <a
+                data-bs-toggle="dropdown"
+                class="text-reset dropdown-toggle hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                aria-expanded="false"
+              >
+                <i class="fas fa-bell"></i>
+                <!-- Для икноки о новых сообщениях -->
+                <span
+                  class="position-absolute translate-middle badge rounded-pill bg-danger"
+                  >-1
+                  <span class="visually-hidden">Непрочитанных СМС</span>
+                </span>
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a class="dropdown-item" href="#">Оповещения</a>
+                </li>
+                <li>
+                  <a class="dropdown-item">Не придумал</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <a
+                data-bs-toggle="dropdown"
+                class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                href="#"
+                id="navbarDropdownMenuAvatar"
+                role="button"
+                aria-expanded="false"
+              >
+                <img
+                  src="../static/images/testavatar.png"
+                  th:src="@{'/uploads/avatars/' + ${user.getAvatarURL()}}"
+                  class="rounded-circle"
+                  width="25"
+                  height="25"
+                  alt="Фото профиля"
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-start dropdown-menu-lg-end"
+                aria-labelledby="navbarDropdownMenuAvatar"
+              >
+                <li>
+                  <a class="dropdown-item" th:href="@{/user/profile}"
+                    >Мой профиль</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Настройки</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/logout">Выйти</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      th:if="${success}"
+      id="userWarningToast"
+      class="container-fluid text-center rounded-3 bg-dark-subtle p-3 mt-2"
+    >
+      <div class="d-flex">
+        <div>
+          <span class="fas fa-check text-success pe-2"></span>
+          Аватар <span class="text-success">успешно</span> загружен!
+        </div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          onclick="hideUserWarningToast()"
+          aria-label="Закрыть"
+        ></button>
+      </div>
+    </div>
+
+    <div
+      th:if="${fileSizeError}"
+      id="userWarningToast"
+      class="container-fluid text-center rounded-3 bg-dark-subtle p-3 mt-2"
+    >
+      <div class="d-flex">
+        <div>
+          <span class="fas fa-close text-danger pe-2"></span>
+          Размер загружаемого изображения превышает
+          <span class="text-danger">допустимый лимит</span>
+        </div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          onclick="hideUserWarningToast()"
+          aria-label="Закрыть"
+        ></button>
+      </div>
+    </div>
+
+    <h1 class="text-center pt-5">Ваш профиль</h1>
+
+    <!-- Карточка -->
+    <div class="container-sm bg-dark-subtle rounded-3 mt-5 p-5">
+      <!-- Главное о пользователе -->
+      <div class="container-fluid d-inline-flex">
+        <!-- Аватарка -->
+        <div style="width: 128px; height: 128px">
+          <img
+            class="rounded-circle img-fluid"
+            src="../static/images/testavatar.png"
+            th:src="@{'/uploads/avatars/' + ${user.getAvatarURL()}}"
+            style="width:100%; height:100%;"
+          />
+        </div>
+
+        <!-- Имя, статус... -->
+        <div class="ps-5 flex-column">
+          <div class="d-inline-flex align-items-center">
+            <h1 th:text="${user.getUsername()}">Имя пользователя</h1>
+            <span class="ms-3 badge rounded-pill text-bg-dark">Оффлайн</span>
+          </div>
+
+          <div class="row">
+            <!-- Вариант -->
+            <div class="col">
+              <div class="d-inline-flex align-items-center">
+                <p class="text-muted">Вариант:</p>
+                <p class="ms-2" th:text="${userVariant.getVariant_value()}">
+                  Вариант
+                </p>
+              </div>
+            </div>
+
+            <!-- ID -->
+            <div class="col">
+              <div class="d-inline-flex align-items-center">
+                <p class="text-muted">ID:</p>
+                <p class="ms-2" th:text="${user.getId()}">ID</p>
+              </div>
+            </div>
+
+            <!-- Активирован? -->
+            <div class="col">
+              <div class="d-inline-flex align-items-center">
+                <p class="text-muted">Активирован?</p>
+                <p class="ms-2" th:text="${isUserEnabled ? 'Да' : 'Нет'}"></p>
+              </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="text-center">
+              <!-- Кнопка загрузки аватарки -->
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#avatarUploadModal"
+              >
+                <span class="fas fa-plus"></span>
+                Загрузить аватарку
+              </button>
+
+              <!-- TODO: сделать editProfileModal -->
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#editProfileModal"
+              >
+                <span class="fas fa-edit"></span>
+                Редактировать профиль
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Окно загрузки файлов -->
+    <div
+      class="modal fade"
+      id="avatarUploadModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <!-- Загрузка -->
+      <form
+        class="modal-dialog"
+        method="post"
+        th:action="@{/uploadAvatar}"
+        enctype="multipart/form-data"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Загрузка аватарки
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Закрыть"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="visually-hidden text-center" id="imgPreviewDiv">
+                <h3>Предпросмотр</h3>
+                <img
+                  id="imgPreview"
+                  class="img-thumbnail rounded-3 mx-auto d-block mb-3"
+                  src="#"
+                  alt="your image"
+                />
+              </div>
+
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                class="form-control-file"
+                id="imgInput"
+              />
+            </div>
+            <span th:if="${msg != null}" th:text="${msg}"></span>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Закрыть
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <span class="fas fa-upload"></span>
+              Загрузить
+            </button>
+          </div>
+        </div>
+        <!--  -->
+      </form>
+    </div>
+
+    <!-- Скрипт -->
+    <script
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+    <script>
+      function hideUserWarningToast() {
+        const toast = document.querySelector("#userWarningToast");
+        toast.style.display = "none";
+      }
+
+      document.getElementById("imgInput").onchange = function (e) {
+        let reader = new FileReader();
+
+        reader.onload = function (event) {
+          document.getElementById("imgPreview").src = event.target.result;
+          document
+            .getElementById("imgPreviewDiv")
+            .classList.remove("visually-hidden");
+        };
+
+        reader.readAsDataURL(e.target.files[0]);
+      };
+    </script>
+  </body>
+</html>

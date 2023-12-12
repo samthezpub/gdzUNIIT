@@ -31,7 +31,8 @@ public class User implements UserDetails {
     @Column(name="password")
     private String password;
 
-    @OneToOne(mappedBy = "user")
+    @ManyToOne
+    @JoinColumn(name = "variant_id")
     private Variant variant;
 
     @ManyToMany(fetch = FetchType.EAGER)

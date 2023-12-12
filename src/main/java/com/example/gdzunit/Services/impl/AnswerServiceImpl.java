@@ -12,8 +12,15 @@ import java.util.List;
 public class AnswerServiceImpl implements AnswerService {
     private final AnswerRepository answerRepository;
 
+
     public AnswerServiceImpl(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
+    }
+
+
+    @Override
+    public void addAnswer(Answer answer) {
+        answerRepository.save(answer);
     }
 
     @Override
@@ -28,6 +35,11 @@ public class AnswerServiceImpl implements AnswerService {
             throw new NoAnswersException("Пока нет ответов...");
         }
         return answers;
+    }
+
+    @Override
+    public void updateAnswer(Answer answer) {
+        answerRepository.save(answer);
     }
 
     @Override

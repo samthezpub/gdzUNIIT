@@ -18,6 +18,9 @@ public class Answer {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "html")
+    private String html;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "variant_id")
     public Variant variant;

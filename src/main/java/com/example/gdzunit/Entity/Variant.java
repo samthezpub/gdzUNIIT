@@ -10,7 +10,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-//Это энтити с полями id, variant_value, users
+//Это энтити с полями id, variant_value
 public class Variant {
 
     @Id
@@ -20,16 +20,12 @@ public class Variant {
     @Column(name = "variant")
     private Short variant_value;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public Variant() {
     }
 
-    public Variant(Short variant_value, User user) {
+    public Variant(Short variant_value) {
         this.variant_value = variant_value;
-        this.user = user;
+
     }
 }
