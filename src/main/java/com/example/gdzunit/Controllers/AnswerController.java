@@ -36,7 +36,7 @@ public class AnswerController {
     }
 
     @GetMapping("/getanswers")
-    public String showAnswerListBySubjectId(@RequestParam("subject") String subject, Model model){
+    public String showAnswerListBySubjectId(@RequestParam("subject") String subject, Model model) {
         User currentUser = userService.getCurrentUser();
         Short variantValue =
                 currentUser.getVariant().getVariant_value();
@@ -57,7 +57,7 @@ public class AnswerController {
 
     // Возвращает представление addAnswer, с List<Subject>, List<Variant>
     @GetMapping("/addanswer")
-    public String getAddAnswer(Model model){
+    public String getAddAnswer(Model model) {
         model.addAttribute("variants", variantService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
 
@@ -69,7 +69,7 @@ public class AnswerController {
     // Обрабатывает полученный запрос и обрабатывает его,
     // добавляет полученный Answer в бд к определённому subject
     @PostMapping("/addanswer")
-    public String addAnswer(@ModelAttribute("answer") Answer answer, Model model){
+    public String addAnswer(@ModelAttribute("answer") Answer answer, Model model) {
         System.out.println(answer);
         answerService.addAnswer(answer);
 
@@ -81,16 +81,27 @@ public class AnswerController {
     }
 
     @GetMapping("/showanswer")
-    public String showAnswerById(@RequestParam("title") String title, Model model){
+    public String showAnswerById(@RequestParam("title") String title, Model model) {
+
+        User currentUser = userService.getCurrentUser();
 
         try {
             Answer answerByAnswerTitle = answerService.findAnswerByAnswerTitle(title);
-            model.addAttribute("answer", answerByAnswerTitle);
+
+            // Если вариант юзера равен варианту ответа
+            if (currentUser.getVariant().equals(answerByAnswerTitle.getVariant())){
+                model.addAttribute("answer", answerByAnswerTitle);
+                return "showAnswer";
+            }
+            else {
+                return "403";
+            }
+
         } catch (NoAnswersException e) {
             log.info("Юзер попытался получить несуществующий ответ: " + title + " Время: " + new Date());
             return "redirect:/error404";
         }
-        return "showAnswer";
+
     }
 
     private String markdownToHTML(String markdown) {
