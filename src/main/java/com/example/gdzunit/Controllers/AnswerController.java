@@ -1,13 +1,10 @@
 package com.example.gdzunit.Controllers;
 
 import com.example.gdzunit.Entity.Answer;
-import com.example.gdzunit.Entity.Subject;
+import com.example.gdzunit.Entity.Role;
+import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Exceptions.NoAnswersException;
-import com.example.gdzunit.Exceptions.NoSuchSubjectException;
-import com.example.gdzunit.Services.impl.AnswerServiceImpl;
-import com.example.gdzunit.Services.impl.SubjectServiceImpl;
-import com.example.gdzunit.Services.impl.UserServiceImpl;
-import com.example.gdzunit.Services.impl.VariantServiceImpl;
+import com.example.gdzunit.Services.impl.*;
 import lombok.extern.slf4j.Slf4j;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -28,18 +25,25 @@ public class AnswerController {
     private final UserServiceImpl userService;
     private final SubjectServiceImpl subjectService;
     private final VariantServiceImpl variantService;
+    private final RoleServiceImpl roleService;
 
-    public AnswerController(AnswerServiceImpl answerService, UserServiceImpl userService, SubjectServiceImpl subjectService, VariantServiceImpl variantService) {
+    public AnswerController(AnswerServiceImpl answerService, UserServiceImpl userService, SubjectServiceImpl subjectService, VariantServiceImpl variantService, RoleServiceImpl roleService) {
         this.answerService = answerService;
         this.userService = userService;
         this.subjectService = subjectService;
         this.variantService = variantService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/getanswers")
     public String showAnswerListBySubjectId(@RequestParam("subject") String subject, Model model){
+        User currentUser = userService.getCurrentUser();
         Short variantValue =
-                userService.getCurrentUser().getVariant().getVariant_value();
+                currentUser.getVariant().getVariant_value();
+
+        Role adminRole = roleService.getAdminRole();
+
+        model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
 
         log.debug(variantValue.toString());
         try {
@@ -78,9 +82,6 @@ public class AnswerController {
 
     @GetMapping("/showanswer")
     public String showAnswerById(@RequestParam("title") String title, Model model){
-
-
-
 
         try {
             Answer answerByAnswerTitle = answerService.findAnswerByAnswerTitle(title);

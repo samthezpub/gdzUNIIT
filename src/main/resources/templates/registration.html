@@ -62,7 +62,7 @@
           <!--            сколько элементов в бд, столько добавит optionов,-->
           <!--            в option отображается значение variant_value, -->
           <!--            а в post отправляется id варианта!-->
-          <select name="form-select variant" id="variant">
+          <select name="variant" id="variant">
             <option
               th:each="variant : ${variants}"
               th:text="${variant.getVariant_value()}"
