@@ -3,6 +3,7 @@ package com.example.gdzunit.Controllers;
 import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Entity.Variant;
+import com.example.gdzunit.Exceptions.UserNotFoundException;
 import com.example.gdzunit.Services.impl.RoleServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import com.example.gdzunit.Services.impl.VariantServiceImpl;
@@ -28,20 +29,31 @@ public class UserController {
 
     @GetMapping("/user")
     public String userInfo(@RequestParam(value = "id", defaultValue = "0") Long id, Model model){
-        model.addAttribute("user", userService.getUser(id));
+        try {
+            model.addAttribute("user", userService.getUser(id));
 
-        if (userService.getUser(id).isEnabled()) {
-            model.addAttribute("isUserEnabled", "Да");
-        } else {
-            model.addAttribute("isUserEnabled", "Нет");
+            if (userService.getUser(id).isEnabled()) {
+                model.addAttribute("isUserEnabled", "Да");
+            } else {
+                model.addAttribute("isUserEnabled", "Нет");
+            }
+
+            model.addAttribute("userVariant", userService.getUser(id).getVariant());
+            return "userinfo";
+        } catch (UserNotFoundException e) {
+            return "404";
         }
-
-        model.addAttribute("userVariant", userService.getUser(id).getVariant());
-        return "userinfo";
     }
 
     @GetMapping("/user/add")
     public String addUser(Model model) {
+        User currentUser = userService.getCurrentUser();
+        model.addAttribute("user", currentUser);
+
+        Role adminRole = roleService.getAdminRole();
+        model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
+
+
         List<Variant> allVariants = variantService.findAll();
         model.addAttribute("allVariants", allVariants);
         model.addAttribute("user", new User());

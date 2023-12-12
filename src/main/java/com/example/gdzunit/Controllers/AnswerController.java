@@ -91,14 +91,16 @@ public class AnswerController {
 
     @GetMapping("/showanswer")
     public String showAnswerById(@RequestParam("title") String title, Model model) {
-
-        User currentUser = userService.getCurrentUser();
-
         try {
             Answer answerByAnswerTitle = answerService.findAnswerByAnswerTitle(title);
+            User currentUser = userService.getCurrentUser();
 
             // Если вариант юзера равен варианту ответа
             if (currentUser.getVariant().equals(answerByAnswerTitle.getVariant())){
+                model.addAttribute("user", currentUser);
+                Role adminRole = roleService.getAdminRole();
+                model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
+
                 model.addAttribute("answer", answerByAnswerTitle);
                 model.addAttribute("user", currentUser);
                 return "showAnswer";
@@ -106,8 +108,6 @@ public class AnswerController {
             else {
                 return "403";
             }
-
-
         } catch (NoAnswersException e) {
             log.info("Юзер попытался получить несуществующий ответ: " + title + " Время: " + new Date());
             return "redirect:/error404";
