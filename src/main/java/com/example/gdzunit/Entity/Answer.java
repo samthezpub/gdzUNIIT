@@ -23,7 +23,10 @@ public class Answer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "variant_id")
-    public Variant variant;
+    private Variant variant;
+
+    @Column(name = "all_variants")
+    private Boolean isForAllVariants;
 
     @ManyToOne
     @JoinColumn(name = "subject_id")

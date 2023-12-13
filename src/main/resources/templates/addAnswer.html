@@ -71,6 +71,30 @@
         </div>
     </div>
 
+    <!-- Для всех вариантов? -->
+    <div class="input-group mb-3 d-flex justify-content-center">
+        <label for="isForAllVariants">Для всех вариантов?</label>
+        <input class="form-check-input mt-0" id="isForAllVariants" type="checkbox" onchange="onCheckboxChecked(this)"
+               th:field="${answer.isForAllVariants}" checked>
+    </div>
+
+<!--    Скрипт для isForAllVariants-->
+    <script>
+        function onCheckboxChecked(checkbox) {
+            // Если на чекбоксе стоит галочка то убирает value и отключает возможность выбора варианта
+            // Иначе дачёт вариант равный единице и возобновляет возможность выбора варианта
+            let elementById = document.getElementById("select");
+            if (checkbox.checked) {
+                elementById.setAttribute("disabled", "");
+                elementById.value = null;
+            } else {
+                elementById.removeAttribute("disabled");
+                elementById.value = 1;
+            }
+
+        }
+    </script>
+
     <!-- Список предметов -->
     <div class="text-center mb-4">
         <label for="datalistOptions">Предмет</label>

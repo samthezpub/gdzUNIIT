@@ -6,6 +6,7 @@ import com.example.gdzunit.Repositories.AnswerRepository;
 import com.example.gdzunit.Services.AnswerService;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -30,10 +31,33 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public List<Answer> findAllAnswersBySubjectNameAndVariant(String name, Short variant) throws NoAnswersException {
-        List<Answer> answers = answerRepository.findAllAnswersBySubjectNameAndVariant(name, variant).get();
-        if (answers.size()==0){
-            throw new NoAnswersException("Пока нет ответов...");
+        List<Answer> answers = answerRepository.findAllAnswersBySubjectNameAndVariant(name, variant)
+                .orElseThrow(() -> new NoAnswersException("Нет ответов с определёнными вариантами!"));
+
+        return answers;
+    }
+
+    @Override
+    public List<Answer> findAllAnswersBySubjectNameWhichForAllVariants(String name) throws NoAnswersException {
+        List<Answer> answers = answerRepository.findAllAnswersBySubjectNameWhichForAllVariants(name)
+                .orElseThrow(() -> new NoAnswersException("Нет ответов со всеми вариантами!"));
+
+        return answers;
+    }
+
+    public List<Answer> findAllAnswers(String name, Short variant) throws NoAnswersException {
+        List<Answer> answers = new LinkedList<>();
+        try {
+            answers.addAll(findAllAnswersBySubjectNameAndVariant(name, variant)); // список ответов с вариантами
+        } catch (NoAnswersException ignored) {}
+        try {
+            answers.addAll(findAllAnswersBySubjectNameWhichForAllVariants(name)); // список ответов для всех вариантов
+        } catch (NoAnswersException ignored) {}
+
+        if (answers.isEmpty()){
+            throw new NoAnswersException("Нет ответов совсем!");
         }
+
         return answers;
     }
 

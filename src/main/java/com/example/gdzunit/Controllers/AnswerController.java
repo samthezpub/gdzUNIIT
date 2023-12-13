@@ -47,7 +47,7 @@ public class AnswerController {
 
         log.debug(variantValue.toString());
         try {
-            List<Answer> allAnswersBySubjectName = answerService.findAllAnswersBySubjectNameAndVariant(subject, variantValue);
+            List<Answer> allAnswersBySubjectName = answerService.findAllAnswers(subject, variantValue);
             model.addAttribute("answers", allAnswersBySubjectName);
         } catch (NoAnswersException e) {
             model.addAttribute("error", e.getMessage());
@@ -95,8 +95,8 @@ public class AnswerController {
             Answer answerByAnswerTitle = answerService.findAnswerByAnswerTitle(title);
             User currentUser = userService.getCurrentUser();
 
-            // Если вариант юзера равен варианту ответа
-            if (currentUser.getVariant().equals(answerByAnswerTitle.getVariant())){
+            // Если вариант юзера равен варианту ответа или ответ для всех вариантов
+            if (currentUser.getVariant().equals(answerByAnswerTitle.getVariant()) || answerByAnswerTitle.getIsForAllVariants()){
                 model.addAttribute("user", currentUser);
                 Role adminRole = roleService.getAdminRole();
                 model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
