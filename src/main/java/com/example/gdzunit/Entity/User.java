@@ -42,7 +42,6 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    // TODO: сделать аватарки пользователям
     @Column(name = "avatar")
     private String avatarURL;
 
