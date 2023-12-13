@@ -30,12 +30,12 @@ https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode -->
   <body data-bs-theme="dark" style="position: relative; height: 100vh" >
   <div th:replace="~{nav :: nav}"></div>
 
-    <div class="container">
+    <div class="container" style="overflow: auto; overflow-x: hidden; height: 92%">
       <div
         class="card-link-holder"
         th:if="${error eq null}"
         th:each="answer : ${answers}"
-        style="width: 100%"
+        style="width: 100%;"
       >
         <a th:href="@{/answers/showanswer(title=${answer.title})}">
           <div class="card mb-3" style="max-width: 100%; background: #9ec5fe">
