@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить предмет</title>
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+
+    <link
+            rel="stylesheet"
+            href="../static/css/bootstrap.min.css"
+            th:href="@{/css/bootstrap.min.css}"
+    />
+</head>
+<body data-bs-theme="dark">
+<div th:replace="~{nav :: nav}"></div>
+
+<form
+        class="container bg-dark-subtle p-3 rounded-3 text-center mt-3"
+        th:action="@{/subjects/add}"
+        method="post"
+>
+
+    <h1 class="pb-3">Добавить предмет</h1>
+
+    <div class="mb-4">
+        <label for="subjectName" class="form-label">Название предмета</label>
+        <input
+                name="name"
+                placeholder="Название предмета"
+                class="form-control"
+                id="subjectName"
+        />
+    </div>
+    <!-- Кнопки -->
+    <div class="text-center">
+        <!-- Кнопка загрузки аватарки -->
+        <button
+                type="button"
+                class="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#avatarUploadModal"
+        >
+            <span class="fas fa-plus"></span>
+            Загрузить аватарку
+        </button>
+    </div>
+
+    <!-- Окно загрузки файлов -->
+    <div
+            class="modal fade"
+            id="avatarUploadModal"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+    >
+        <!-- Загрузка -->
+        <form
+                class="modal-dialog"
+                method="post"
+                th:action="@{/uploadSubject}"
+                enctype="multipart/form-data"
+        >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                        Загрузка аватарки
+                    </h1>
+                    <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Закрыть"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="visually-hidden text-center" id="imgPreviewDiv">
+                            <h3>Предпросмотр</h3>
+                            <img
+                                    id="imgPreview"
+                                    class="img-thumbnail rounded-3 mx-auto d-block mb-3"
+                                    src="#"
+                                    alt="your image"
+                            />
+                        </div>
+
+                        <input
+                                type="file"
+                                name="image"
+                                accept="image/*"
+                                class="form-control-file"
+                                id="imgInput"
+                        />
+                    </div>
+                    <span th:if="${msg != null}" th:text="${msg}"></span>
+                </div>
+                <div class="modal-footer">
+                    <button
+                            type="button"
+                            class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal"
+                    >
+                        Закрыть
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="fas fa-upload"></span>
+                        Загрузить
+                    </button>
+                </div>
+            </div>
+            <!--  -->
+        </form>
+    </div>
+
+    <!-- Скрипт -->
+    <script
+            src="../static/js/bootstrap.bundle.min.js"
+            th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+</body>
+</html>

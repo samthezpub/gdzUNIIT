@@ -30,10 +30,12 @@
   <body data-bs-theme="dark">
 
   <div th:replace="~{nav :: nav}"></div>
-    <div class="text-center bg-dark-subtle p-5 rounded-5 m-5">
+    <div class="text-center bg-dark-subtle p-5 rounded-5 m-5" style="min-height: 100%">
       <h1 class="p-3">ну типа это, ты вошёл окда</h1>
 
       <div class="card-container">
+
+<!--        th:style="'background-image:url(' + '/uploads/subjects/' + ${subject.image_url} + ');'"-->
         <div
           class="card"
           th:each="subject : ${subjects}"
@@ -53,12 +55,16 @@
         </div>
       </div>
 
-      <br />
-
-      <a href="/logout">
-        <div class="text-center">Выйти</div>
-      </a>
     </div>
+
+  <a th:if='${isUserHaveAdminRole}' th:href="@{/subjects/add}">
+    <div style="position: absolute; bottom: 20px; right: 1%">
+      <div style="border-radius: 1000px;background: #0a58ca; width: 64px;height: 64px;display: flex;justify-content: center;
+      align-items: center;">
+        <span style="font-size: 2em; margin-bottom: 6px">+</span>
+      </div>
+    </div>
+  </a>
 
     <!-- Скрипт -->
     <script
