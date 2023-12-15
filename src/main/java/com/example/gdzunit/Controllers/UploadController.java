@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,12 +27,12 @@ public class UploadController {
 
     private static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "\\uploads";
     private static String UPLOAD_DIRECTORY_AVATARS = UPLOAD_DIRECTORY + "\\avatars";
-    private static String UPLOAD_DIRECTORY_ANSWERS = UPLOAD_DIRECTORY + "\\answers";
+    private static String UPLOAD_DIRECTORY_SUBJECTS = UPLOAD_DIRECTORY + "\\subjects";
 
     public UploadController() throws IOException {
         Files.createDirectories(Paths.get(UPLOAD_DIRECTORY));
         Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_AVATARS));
-        Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_ANSWERS));
+        Files.createDirectories(Paths.get(UPLOAD_DIRECTORY_SUBJECTS));
     }
 
 
@@ -54,5 +55,20 @@ public class UploadController {
         model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
 
         return "redirect:/me?success";
+    }
+
+    @PostMapping("/uploadSubject")
+    public String uploadSubjectImage(@ModelAttribute("subject") String subject, Model model, @RequestParam("image") MultipartFile file) throws IOException {
+        StringBuilder fileNames = new StringBuilder();
+
+        String newFileName = subject + ".jpg";
+        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY_AVATARS, newFileName);
+
+        fileNames.append(newFileName);
+        Files.write(fileNameAndPath, file.getBytes());
+
+        model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
+
+        return "redirect:/subjects/addSubject?success";
     }
 }

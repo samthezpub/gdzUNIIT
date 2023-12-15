@@ -9,6 +9,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,10 +42,20 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @Column(name = "enabled")
+    @Transient
     private Boolean enabled;
 
     @Column(name = "avatar")
     private String avatarURL;
+
+    @Column(name = "register_date")
+    private LocalDateTime registerDate;
+
+    @Column(name = "last_online_time")
+    private LocalDateTime lastOnlineTime;
+
+    @Column(name = "activation_expiry_time")
+    private LocalDateTime activationExpiryTime;
 
     public User() {
         this.roles = new HashSet<>();
@@ -89,6 +101,9 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
+        if (Duration.between(LocalDateTime.now(), activationExpiryTime).getSeconds() < 0){
+            return false;
+        }
         return true;
     }
 }
