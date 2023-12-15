@@ -44,12 +44,17 @@ public class MainPageController {
     private RoleServiceImpl roleService;
 
     @GetMapping("/")
-    public String getMainPage(Model model){
+    public String getMainPage(){
         if (isAuthenticated()){
             return "redirect:/home";
         }
 
         return "index";
+    }
+
+    @GetMapping("/termsofuse")
+    public String getTermsOfUse(){
+        return "termsofuse";
     }
 
 
