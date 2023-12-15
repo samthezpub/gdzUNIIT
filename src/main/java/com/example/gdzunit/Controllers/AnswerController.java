@@ -1,10 +1,12 @@
 package com.example.gdzunit.Controllers;
 
 import com.example.gdzunit.Entity.Answer;
+import com.example.gdzunit.Entity.Comment;
 import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Exceptions.NoAnswersException;
 import com.example.gdzunit.Services.impl.*;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+@AllArgsConstructor
 @Controller
 @RequestMapping("/answers")
 @Slf4j
@@ -26,14 +29,8 @@ public class AnswerController {
     private final SubjectServiceImpl subjectService;
     private final VariantServiceImpl variantService;
     private final RoleServiceImpl roleService;
+    private final CommentServiceImpl commentService;
 
-    public AnswerController(AnswerServiceImpl answerService, UserServiceImpl userService, SubjectServiceImpl subjectService, VariantServiceImpl variantService, RoleServiceImpl roleService) {
-        this.answerService = answerService;
-        this.userService = userService;
-        this.subjectService = subjectService;
-        this.variantService = variantService;
-        this.roleService = roleService;
-    }
 
     @GetMapping("/getanswers")
     public String showAnswerListBySubjectId(@RequestParam("subject") String subject, Model model) {
@@ -103,6 +100,9 @@ public class AnswerController {
 
                 model.addAttribute("answer", answerByAnswerTitle);
                 model.addAttribute("user", currentUser);
+
+                model.addAttribute("comments", commentService.getAllCommentsByAnswerId(answerByAnswerTitle.getId()));
+                model.addAttribute("isHasComments", commentService.getAllCommentsByAnswerId(answerByAnswerTitle.getId()).isEmpty());
                 return "showAnswer";
             }
             else {
@@ -113,6 +113,13 @@ public class AnswerController {
             return "redirect:/error404";
         }
 
+    }
+
+    // TODO: сделать нормальный редирект
+    @PostMapping("/addcomment")
+    public String addComment(Comment comment){
+        commentService.addComment(comment, userService.getCurrentUser());
+        return "redirect:/home";
     }
 
     private String markdownToHTML(String markdown) {

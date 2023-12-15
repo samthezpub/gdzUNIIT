@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 // Это энтити с полями id, username, password, variant(id), roles
@@ -56,6 +57,10 @@ public class User implements UserDetails {
 
     @Column(name = "activation_expiry_time")
     private LocalDateTime activationExpiryTime;
+
+    @Column(name = "comments")
+    @OneToMany
+    private List<Comment> comments;
 
     public User() {
         this.roles = new HashSet<>();
