@@ -51,8 +51,7 @@ public class AnswerController {
             model.addAttribute("answers", allAnswersBySubjectName);
         } catch (NoAnswersException e) {
             model.addAttribute("error", e.getMessage());
-        }
-        finally {
+        } finally {
             model.addAttribute("user", currentUser);
         }
         return "answers";
@@ -68,17 +67,21 @@ public class AnswerController {
         model.addAttribute("user", currentUser);
 
         Role adminRole = roleService.getAdminRole();
-        model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
+        if (currentUser.getRoles().contains(adminRole)) {
+            model.addAttribute("isUserHaveAdminRole", true);
+            model.addAttribute("answer", new Answer());
+            return "addAnswer";
+        } else {
+            return "403";
+        }
 
-        model.addAttribute("answer", new Answer());
-
-        return "addAnswer";
     }
 
     // Обрабатывает полученный запрос и обрабатывает его,
     // добавляет полученный Answer в бд к определённому subject
     @PostMapping("/addanswer")
     public String addAnswer(@ModelAttribute("answer") Answer answer, Model model) {
+
         System.out.println(answer);
         answerService.addAnswer(answer);
 
@@ -96,7 +99,7 @@ public class AnswerController {
             User currentUser = userService.getCurrentUser();
 
             // Если вариант юзера равен варианту ответа или ответ для всех вариантов
-            if (currentUser.getVariant().equals(answerByAnswerTitle.getVariant()) || answerByAnswerTitle.getIsForAllVariants()){
+            if (currentUser.getVariant().equals(answerByAnswerTitle.getVariant()) || answerByAnswerTitle.getIsForAllVariants()) {
                 model.addAttribute("user", currentUser);
                 Role adminRole = roleService.getAdminRole();
                 model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
@@ -104,8 +107,7 @@ public class AnswerController {
                 model.addAttribute("answer", answerByAnswerTitle);
                 model.addAttribute("user", currentUser);
                 return "showAnswer";
-            }
-            else {
+            } else {
                 return "403";
             }
         } catch (NoAnswersException e) {

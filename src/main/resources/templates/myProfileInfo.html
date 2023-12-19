@@ -117,6 +117,14 @@
               </div>
             </div>
 
+            <!-- Роль -->
+            <div class="col">
+              <div class="d-inline-flex align-items-center">
+                <p class="text-muted">Роль</p>
+                <p class="ms-2" th:each="authority : ${user.authorities}" th:text="${authority.getAuthority()}"></p>
+              </div>
+            </div>
+
             <!-- Кнопки -->
             <div class="text-center">
               <!-- Кнопка загрузки аватарки -->

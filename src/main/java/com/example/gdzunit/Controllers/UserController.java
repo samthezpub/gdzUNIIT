@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String userInfo(@RequestParam(value = "id", defaultValue = "0") Long id, Model model){
+    public String userInfo(@RequestParam(value = "id", defaultValue = "0") Long id, Model model) {
         try {
             model.addAttribute("user", userService.getUser(id));
 
@@ -51,13 +51,18 @@ public class UserController {
         model.addAttribute("user", currentUser);
 
         Role adminRole = roleService.getAdminRole();
-        model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
+
+        if (currentUser.getRoles().contains(adminRole)) {
+            model.addAttribute("isUserHaveAdminRole", true);
 
 
-        List<Variant> allVariants = variantService.findAll();
-        model.addAttribute("allVariants", allVariants);
-        model.addAttribute("user", new User());
-        return "add";
+            List<Variant> allVariants = variantService.findAll();
+            model.addAttribute("allVariants", allVariants);
+            model.addAttribute("user", new User());
+            return "add";
+        }else {
+            return "403";
+        }
     }
 
     @PostMapping("/user/add")
@@ -68,7 +73,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public String showProfile(@RequestParam(required = false) String success, @RequestParam(required = false) String fileSizeError,  MultipartFile file, Model model){
+    public String showProfile(@RequestParam(required = false) String success, @RequestParam(required = false) String fileSizeError, MultipartFile file, Model model) {
         User currentUser = userService.getCurrentUser();
 
         model.addAttribute("user", currentUser);
