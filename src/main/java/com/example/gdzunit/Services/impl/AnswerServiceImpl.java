@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
@@ -23,6 +24,11 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public void addAnswer(Answer answer) {
         answerRepository.save(answer);
+    }
+
+    @Override
+    public Answer getAnswerById(Long id) throws NoAnswersException {
+        return answerRepository.findById(id).orElseThrow(() -> new NoAnswersException("Ответ не найден"));
     }
 
     @Override

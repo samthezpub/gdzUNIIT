@@ -1,10 +1,14 @@
 package com.example.gdzunit.Controllers;
 
 import com.example.gdzunit.Entity.Answer;
+import com.example.gdzunit.Entity.Comment;
 import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Exceptions.NoAnswersException;
+import com.example.gdzunit.Exceptions.NoCommentsException;
+import com.example.gdzunit.Services.CommentService;
 import com.example.gdzunit.Services.impl.*;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -13,10 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/answers")
 @Slf4j
 public class AnswerController {
@@ -26,14 +32,7 @@ public class AnswerController {
     private final SubjectServiceImpl subjectService;
     private final VariantServiceImpl variantService;
     private final RoleServiceImpl roleService;
-
-    public AnswerController(AnswerServiceImpl answerService, UserServiceImpl userService, SubjectServiceImpl subjectService, VariantServiceImpl variantService, RoleServiceImpl roleService) {
-        this.answerService = answerService;
-        this.userService = userService;
-        this.subjectService = subjectService;
-        this.variantService = variantService;
-        this.roleService = roleService;
-    }
+    private final CommentServiceImpl commentService;
 
     @GetMapping("/getanswers")
     public String showAnswerListBySubjectId(@RequestParam("subject") String subject, Model model) {
@@ -74,7 +73,6 @@ public class AnswerController {
         } else {
             return "403";
         }
-
     }
 
     // Обрабатывает полученный запрос и обрабатывает его,
@@ -92,11 +90,13 @@ public class AnswerController {
         return "redirect:/answers/addanswer";
     }
 
-    @GetMapping("/showanswer")
-    public String showAnswerById(@RequestParam("title") String title, Model model) {
+    @GetMapping("/showanswer/{id}")
+    public String showAnswerById(@PathVariable Long id, Model model) {
         try {
-            Answer answerByAnswerTitle = answerService.findAnswerByAnswerTitle(title);
+            Answer answerByAnswerTitle = answerService.getAnswerById(id);
             User currentUser = userService.getCurrentUser();
+
+            List<Comment> commentList = commentService.getAllCommentsByAnswerId(answerByAnswerTitle.getId());
 
             // Если вариант юзера равен варианту ответа или ответ для всех вариантов
             if (currentUser.getVariant().equals(answerByAnswerTitle.getVariant()) || answerByAnswerTitle.getIsForAllVariants()) {
@@ -104,17 +104,37 @@ public class AnswerController {
                 Role adminRole = roleService.getAdminRole();
                 model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
 
+                model.addAttribute("comments", commentList);
+
+                if (commentList.isEmpty()){
+                    model.addAttribute("noComments", true);
+                }
+
                 model.addAttribute("answer", answerByAnswerTitle);
                 model.addAttribute("user", currentUser);
                 return "showAnswer";
-            } else {
-                return "403";
             }
+        } catch (NoAnswersException e) {
+            log.info("Юзер попытался получить несуществующий ответ: " + id + " Время: " + new Date());
+            return "redirect:/error404";
+        } catch (NoCommentsException e) {
+
+        }
+        return "403";
+    }
+
+
+    @PostMapping("/addcomment/{id}")
+    public String addComment(@ModelAttribute("comment") Comment comment, @PathVariable Long id) {
+        try {
+            comment.setAnswer(answerService.getAnswerById(id));
+            comment.setAuthor(userService.getCurrentUser());
+            comment.setPublishDate(LocalDateTime.now());
+            commentService.addComment(comment);
         } catch (NullPointerException e){
 
         } catch (NoAnswersException e) {
-            log.info("Юзер попытался получить несуществующий ответ: " + title + " Время: " + new Date());
-            return "redirect:/error404";
+
         }
 
         return null;

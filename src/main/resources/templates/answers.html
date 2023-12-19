@@ -37,7 +37,7 @@ https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode -->
         th:each="answer : ${answers}"
         style="width: 100%;"
       >
-        <a th:href="@{/answers/showanswer(title=${answer.title})}">
+        <a th:href="@{'/answers/showanswer/' + ${answer.id}}">
           <div class="card mb-3" style="max-width: 100%; background: #9ec5fe">
             <div>
               <div class="card-body">
