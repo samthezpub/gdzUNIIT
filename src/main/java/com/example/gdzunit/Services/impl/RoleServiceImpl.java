@@ -3,6 +3,7 @@ package com.example.gdzunit.Services.impl;
 import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Repositories.RoleRepository;
 import com.example.gdzunit.Services.RoleService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -15,6 +16,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
+
 
     @Override
     public Set<Role> getUserRole() {

@@ -1,6 +1,7 @@
 package com.example.gdzunit.API;
 
 import lombok.Data;
+
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

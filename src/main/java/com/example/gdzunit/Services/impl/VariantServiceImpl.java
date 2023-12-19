@@ -4,6 +4,7 @@ import com.example.gdzunit.Entity.Variant;
 import com.example.gdzunit.Exceptions.VariantNotFoundedException;
 import com.example.gdzunit.Repositories.VariantRepository;
 import com.example.gdzunit.Services.VariantService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
@@ -24,6 +25,7 @@ public class VariantServiceImpl implements VariantService {
         variantRepository.save(variant);
     }
 
+    @Cacheable(cacheNames = {"variant"})
     @Override
     public Variant findVariantById(Long id) throws VariantNotFoundedException {
         return variantRepository.findById(id).orElseThrow(() -> new VariantNotFoundedException("Вариант не найден!"));
