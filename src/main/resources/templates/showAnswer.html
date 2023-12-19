@@ -1,48 +1,112 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Страница модератора</title>
 
     <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
 
     <link
-            rel="stylesheet"
-            href="../static/css/bootstrap.min.css"
-            th:href="@{/css/bootstrap.min.css}"
+      rel="stylesheet"
+      href="../static/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
     />
-</head>
+  </head>
 
-<!-- data-bs-theme="dark" - делает тёмную тему
+  <!-- data-bs-theme="dark" - делает тёмную тему
 см. документацию Bootstrap
 https://getbootstrap.com/docs/5.3/customize/color-modes/#dark-mode -->
-<body data-bs-theme="dark">
-<div th:replace="~{nav :: nav}"></div>
+  <body data-bs-theme="dark">
+    <div th:replace="~{nav :: nav}"></div>
 
-<main class="mt-5">
-    <div class="container">
+    <main class="mt-5">
+      <div class="container">
         <div th:if="${answer}">
-            <h1 class="text-center mb-5">Ответ</h1>
+          <h1 class="text-center mb-5">Ответ</h1>
 
-            <h2 th:text="${answer.title}"></h2>
-            <div th:utext="${answer.html}">Контент</div>
+          <h2 th:text="${answer.title}"></h2>
+          <div th:utext="${answer.html}">Контент</div>
         </div>
-    </div>
-</main>
+      </div>
 
-<!-- Скрипты для работы всяких приколов -->
-<script
-        src="../static/js/bootstrap.bundle.min.js"
-        th:src="@{/js/bootstrap.bundle.min.js}"
-></script>
-</body>
+      <h3 class="text-center mt-5">Комментарии</h3>
+
+      <div class="container p-3 rounded-3 text-center mt-3">
+        <div>
+          <button
+            class="btn btn-primary mt-2"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <span class="fas fa-add me-1"></span>
+            Добавить комментарий
+          </button>
+          <div class="collapse mt-3" id="collapseExample">
+            <div class="card card-body">
+              <form
+                th:action="@{'/answers/addcomment/' + ${answer.id}}"
+                class="container rounded-3"
+                method="post"
+              >
+                <textarea
+                  class="form-control"
+                  name="content"
+                  id="contentInput"
+                  placeholder="Введите текст комментария..."
+                  rows="2"
+                ></textarea>
+
+                <button type="submit" class="btn btn-primary mt-3">
+                  <span class="fas fa-add"></span>
+                  Добавить
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div th:if="${noComments}" class="alert alert-secondary mt-3" role="alert">
+          Комментариев ещё нет
+        </div>
+
+        <div class="container p-3 rounded-3" th:each="comment : ${comments}">
+          <div class="text-start bg-body-tertiary rounded-3 p-3">
+            <div class="d-inline-flex text-muted">
+              <img
+                src="../static/images/testavatar.png"
+                th:src="@{'/uploads/avatars/' + ${comment.getAuthor.getAvatarURL()}}"
+                alt="Аватар автора"
+                width="30"
+                height="30"
+                class="me-2 rounded-circle"
+              />
+              <p th:text="${comment.getAuthor.username}">Автор</p>
+              <p class="ms-2 me-2">·</p>
+              <p th:text="${comment.getPublishDateFormatted()}">время</p>
+            </div>
+
+            <h5 th:text="${comment.content}">Текст комментария</h5>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Скрипты для работы всяких приколов -->
+    <script
+      src="../static/js/bootstrap.bundle.min.js"
+      th:src="@{/js/bootstrap.bundle.min.js}"
+    ></script>
+  </body>
 </html>

@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 // Это энтити с полями id, username, password, variant(id), roles
@@ -27,7 +28,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name="username")
+    @Column(name="username", unique = true)
     private String username;
 
     @Column(name="password")
@@ -56,6 +57,9 @@ public class User implements UserDetails {
 
     @Column(name = "activation_expiry_time")
     private LocalDateTime activationExpiryTime;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Comment> comments;
 
     public User() {
         this.roles = new HashSet<>();
