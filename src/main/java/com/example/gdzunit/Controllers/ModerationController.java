@@ -27,11 +27,15 @@ public class ModerationController {
         model.addAttribute("user", currentUser);
 
         Role adminRole = roleService.getAdminRole();
-        model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
-
-        List<User> userList = userService.getAllUsers();
-        model.addAttribute("allUsersList", userList);
-        model.addAttribute(currentUser);
-        return "moderation";
+        if (currentUser.getRoles().contains(adminRole)){
+            model.addAttribute("isUserHaveAdminRole", true);
+            List<User> userList = userService.getAllUsers();
+            model.addAttribute("allUsersList", userList);
+            model.addAttribute(currentUser);
+            return "moderation";
+        }
+        else {
+            return "403";
+        }
     }
 }
