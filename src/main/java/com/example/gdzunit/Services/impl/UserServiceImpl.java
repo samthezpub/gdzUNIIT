@@ -9,11 +9,13 @@ import com.example.gdzunit.Repositories.UserRepository;
 import com.example.gdzunit.Services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -47,6 +49,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         boolean isUserFromDB = userRepository.findByUsername(user.getUsername()).isEmpty();
 
+
         try {
             if (!isUserFromDB) {
                 throw new UserNotFoundException("Пользователь уже существует");
@@ -64,6 +67,9 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException(e);
             }
 
+            user.setRegisterDate(LocalDateTime.now());
+
+
             userRepository.save(user);
         } catch (UserNotFoundException e) {
             log.warn(e.getMessage());
@@ -75,6 +81,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
+    @Cacheable(cacheNames = {"getUser"})
     @Override
     public User getUser(long id) throws UserNotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Пользователь не найден!"));

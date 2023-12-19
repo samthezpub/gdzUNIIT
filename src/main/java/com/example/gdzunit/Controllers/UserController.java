@@ -7,6 +7,7 @@ import com.example.gdzunit.Exceptions.UserNotFoundException;
 import com.example.gdzunit.Services.impl.RoleServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import com.example.gdzunit.Services.impl.VariantServiceImpl;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class UserController {
         this.roleService = roleService;
     }
 
+    @Cacheable(cacheNames = {"userid"}, key = "#userId")
     @GetMapping("/user")
     public String userInfo(@RequestParam(value = "id", defaultValue = "0") Long id, Model model) {
         try {

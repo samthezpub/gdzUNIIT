@@ -4,9 +4,11 @@ import com.example.gdzunit.Entity.Subject;
 import com.example.gdzunit.Repositories.SubjectRepository;
 import com.example.gdzunit.Services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -19,6 +21,7 @@ public class SubjectServiceImpl implements SubjectService {
         subjectRepository.save(subject);
     }
 
+    @Cacheable("allSubjects")
     @Override
     public List<Subject> findAll() {
         return subjectRepository.findAll();

@@ -4,6 +4,7 @@ import com.example.gdzunit.Entity.Answer;
 import com.example.gdzunit.Exceptions.NoAnswersException;
 import com.example.gdzunit.Repositories.AnswerRepository;
 import com.example.gdzunit.Services.AnswerService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -29,6 +30,7 @@ public class AnswerServiceImpl implements AnswerService {
         return answerRepository.findAllAnswersBySubjectId(id).orElseThrow(() -> new NoAnswersException("Нет ответов"));
     }
 
+    @Cacheable(cacheNames = {"answersBySubjectNameAndVariant"})
     @Override
     public List<Answer> findAllAnswersBySubjectNameAndVariant(String name, Short variant) throws NoAnswersException {
         List<Answer> answers = answerRepository.findAllAnswersBySubjectNameAndVariant(name, variant)
@@ -37,6 +39,7 @@ public class AnswerServiceImpl implements AnswerService {
         return answers;
     }
 
+    @Cacheable(cacheNames = {"answersBySubjectNameAndVariant"})
     @Override
     public List<Answer> findAllAnswersBySubjectNameWhichForAllVariants(String name) throws NoAnswersException {
         List<Answer> answers = answerRepository.findAllAnswersBySubjectNameWhichForAllVariants(name)
@@ -45,6 +48,7 @@ public class AnswerServiceImpl implements AnswerService {
         return answers;
     }
 
+    @Cacheable(cacheNames = {"answersBySubjectNameAndVariant, answersBySubjectNameAndVariant"})
     public List<Answer> findAllAnswers(String name, Short variant) throws NoAnswersException {
         List<Answer> answers = new LinkedList<>();
         try {
