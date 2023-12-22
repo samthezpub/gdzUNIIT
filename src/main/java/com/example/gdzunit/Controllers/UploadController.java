@@ -68,6 +68,8 @@ public class UploadController {
         StringBuilder fileNames = new StringBuilder();
 
         String newFileName = subject.getName() + ".jpg";
+        newFileName = newFileName.replace(' ', '_'); // замена пробелов
+
         Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY_SUBJECTS, newFileName);
 
         fileNames.append(newFileName);
