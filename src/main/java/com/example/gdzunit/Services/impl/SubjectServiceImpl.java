@@ -21,7 +21,6 @@ public class SubjectServiceImpl implements SubjectService {
         subjectRepository.save(subject);
     }
 
-    @Cacheable("allSubjects")
     @Override
     public List<Subject> findAll() {
         return subjectRepository.findAll();

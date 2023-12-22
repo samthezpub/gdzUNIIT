@@ -41,9 +41,11 @@
           th:each="subject : ${subjects}"
           style="
             width: 25%;
-            background: url('/images/testicon.png') no-repeat center;
-            background-size: cover;
+            background: no-repeat center;
+            background-size: contain;
           "
+          th:style="'background-image: url('+ @{'/uploads/subjects/' + ${subject.image_url}} +');'"
+
         >
           <a th:href="@{/answers/getanswers(subject=${subject.name})}">
             <div class="card-body">

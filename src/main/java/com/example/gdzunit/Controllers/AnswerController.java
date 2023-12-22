@@ -8,6 +8,7 @@ import com.example.gdzunit.Exceptions.NoAnswersException;
 import com.example.gdzunit.Exceptions.NoCommentsException;
 import com.example.gdzunit.Services.CommentService;
 import com.example.gdzunit.Services.impl.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.commonmark.node.Node;
@@ -125,19 +126,22 @@ public class AnswerController {
 
 
     @PostMapping("/addcomment/{id}")
-    public String addComment(@ModelAttribute("comment") Comment comment, @PathVariable Long id) {
+    public String addComment(@ModelAttribute("comment") Comment comment, @PathVariable Long id, HttpServletRequest request) {
         try {
             comment.setAnswer(answerService.getAnswerById(id));
             comment.setAuthor(userService.getCurrentUser());
             comment.setPublishDate(LocalDateTime.now());
             commentService.addComment(comment);
+
+            String referer = request.getHeader("Referer");
+            return "redirect:"+ referer;
         } catch (NullPointerException e){
 
         } catch (NoAnswersException e) {
 
         }
 
-        return null;
+        return "500";
     }
 
     private String markdownToHTML(String markdown) {
