@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException(e);
             }
 
-            user.setRegisterDate(LocalDateTime.now());
+//            user.setRegisterDate(LocalDateTime.now());
 
 
             userRepository.save(user);

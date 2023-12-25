@@ -28,24 +28,6 @@ public class UserController {
         this.roleService = roleService;
     }
 
-    @Cacheable(cacheNames = {"userid"}, key = "#userId")
-    @GetMapping("/user")
-    public String userInfo(@RequestParam(value = "id", defaultValue = "0") Long id, Model model) {
-        try {
-            model.addAttribute("user", userService.getUser(id));
-
-            if (userService.getUser(id).isEnabled()) {
-                model.addAttribute("isUserEnabled", "Да");
-            } else {
-                model.addAttribute("isUserEnabled", "Нет");
-            }
-
-            model.addAttribute("userVariant", userService.getUser(id).getVariant());
-            return "userinfo";
-        } catch (UserNotFoundException e) {
-            return "404";
-        }
-    }
 
     @GetMapping("/user/add")
     public String addUser(Model model) {

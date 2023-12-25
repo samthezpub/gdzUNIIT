@@ -26,14 +26,20 @@
 <div th:replace="~{nav :: nav}"></div>
 
 <!-- Карточка -->
-<div class="container-sm bg-dark-subtle rounded-3 mt-5 p-5">
+<div class="container-sm bg-dark-subtle rounded-3 mt-5 p-5 container-s">
     <!-- Главное о пользователе -->
     <div class="container-fluid d-inline-flex">
         <!-- Аватарка -->
         <div style="width: 7rem; height: 7rem">
             <!-- ОБЯЗАТЕЛЬНО ПОТОМ УБРАТЬ TESTAVATAR!!! -->
-            <img
-                    class="rounded-circle img-fluid"
+            <img th:if="${user.getAvatarURL() == null}"
+                 class="rounded-circle img-fluid image"
+                 th:src="@{/images/testavatar.png}"
+                 width="100%"
+                 height="100%"
+            />
+            <img th:if="${user.getAvatarURL() != null}"
+                    class="rounded-circle img-fluid image"
                     th:src="@{'/uploads/avatars/' + ${user.getAvatarURL()}}"
                     width="100%"
                     height="100%"
@@ -76,6 +82,11 @@
             </div>
         </div>
     </div>
+
+    <!--Кнопка назад-->
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-warning" th:href="@{/moderation}">Назад к панели</a>
+    </div>
 </div>
 
 
@@ -86,4 +97,22 @@
         th:src="@{/js/bootstrap.bundle.min.js}"
 ></script>
 </body>
+
+<style>
+    @media screen and (max-width: 576px){
+        .image{
+            width: 98px;
+            height: 95px;
+        }
+
+        .img-fluid{
+            max-width: inherit;
+        }
+
+        .container-s{
+            padding: 0;
+        }
+
+    }
+</style>
 </html>

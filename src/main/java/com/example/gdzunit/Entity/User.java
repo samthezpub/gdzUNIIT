@@ -49,14 +49,14 @@ public class User implements UserDetails {
     @Column(name = "avatar")
     private String avatarURL;
 
-    @Column(name = "register_date")
-    private LocalDateTime registerDate;
-
-    @Column(name = "last_online_time")
-    private LocalDateTime lastOnlineTime;
-
-    @Column(name = "activation_expiry_time")
-    private LocalDateTime activationExpiryTime;
+//    @Column(name = "register_date")
+//    private LocalDateTime registerDate;
+//
+//    @Column(name = "last_online_time")
+//    private LocalDateTime lastOnlineTime;
+//
+//    @Column(name = "activation_expiry_time")
+//    private LocalDateTime activationExpiryTime;
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
@@ -105,9 +105,9 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (Duration.between(LocalDateTime.now(), activationExpiryTime).getSeconds() < 0){
-            return false;
-        }
+//        if (Duration.between(LocalDateTime.now(), activationExpiryTime).getSeconds() < 0){
+//            return false;
+//        }
         return true;
     }
 }

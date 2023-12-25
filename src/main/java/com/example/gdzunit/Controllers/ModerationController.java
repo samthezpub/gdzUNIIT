@@ -2,15 +2,20 @@ package com.example.gdzunit.Controllers;
 
 import com.example.gdzunit.Entity.Role;
 import com.example.gdzunit.Entity.User;
+import com.example.gdzunit.Exceptions.UserNotFoundException;
 import com.example.gdzunit.Services.impl.RoleServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
+@RequestMapping(path="/moderation")
 public class ModerationController {
 
     private final UserServiceImpl userService;
@@ -21,7 +26,7 @@ public class ModerationController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/moderation")
+    @GetMapping(path="")
     public String showModerPage(Model model) {
         User currentUser = userService.getCurrentUser();
         model.addAttribute("user", currentUser);
@@ -36,6 +41,24 @@ public class ModerationController {
         }
         else {
             return "403";
+        }
+    }
+
+    @GetMapping(path="/user")
+    public String userInfo(@RequestParam(value = "id") Long id, Model model) {
+        try {
+            model.addAttribute("user", userService.getUser(id));
+
+            if (userService.getUser(id).isEnabled()) {
+                model.addAttribute("isUserEnabled", true);
+            } else {
+                model.addAttribute("isUserEnabled", false);
+            }
+
+            model.addAttribute("userVariant", userService.getUser(id).getVariant());
+            return "userinfo";
+        } catch (UserNotFoundException e) {
+            return "404";
         }
     }
 }
