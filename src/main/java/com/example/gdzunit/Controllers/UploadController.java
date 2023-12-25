@@ -1,8 +1,11 @@
 package com.example.gdzunit.Controllers;
 
+import com.example.gdzunit.Entity.Subject;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Services.UserService;
+import com.example.gdzunit.Services.impl.SubjectServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +27,9 @@ public class UploadController {
 
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private SubjectServiceImpl subjectService;
 
     private static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "\\uploads";
     private static String UPLOAD_DIRECTORY_AVATARS = UPLOAD_DIRECTORY + "\\avatars";
@@ -58,17 +64,24 @@ public class UploadController {
     }
 
     @PostMapping("/uploadSubject")
-    public String uploadSubjectImage(@ModelAttribute("subject") String subject, Model model, @RequestParam("image") MultipartFile file) throws IOException {
+    public String uploadSubjectImage(@ModelAttribute Subject subject, Model model, @RequestParam("image") MultipartFile file, HttpServletRequest request) throws IOException {
         StringBuilder fileNames = new StringBuilder();
 
-        String newFileName = subject + ".jpg";
-        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY_AVATARS, newFileName);
+        String newFileName = subject.getName() + ".jpg";
+        newFileName = newFileName.replace(' ', '_'); // замена пробелов
+
+        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY_SUBJECTS, newFileName);
 
         fileNames.append(newFileName);
         Files.write(fileNameAndPath, file.getBytes());
 
         model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
+        subject.setImage_url(newFileName);
+        String referer = request.getHeader("Referer");
+        System.out.println(subject);
 
-        return "redirect:/subjects/addSubject?success";
+        subjectService.addSubject(subject);
+
+        return "redirect:" + referer;
     }
 }

@@ -24,8 +24,9 @@
 
     <form
       class="container bg-dark-subtle p-3 rounded-3 text-center mt-3"
-      th:action="@{/subjects/add}"
+      th:action="@{/uploadSubject}"
       method="post"
+      enctype="multipart/form-data"
     >
       <h1 class="pb-3">Добавить предмет</h1>
 
@@ -122,6 +123,7 @@
           </div>
         </div>
       </div>
+        <input type="submit" value="Добавить">
     </form>
     <!-- Скрипт -->
     <script

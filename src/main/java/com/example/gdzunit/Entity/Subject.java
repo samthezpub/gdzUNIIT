@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 public class Subject {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "name")
@@ -23,4 +23,13 @@ public class Subject {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Answer> answers;
 
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", answers=" + answers +
+                '}';
+    }
 }

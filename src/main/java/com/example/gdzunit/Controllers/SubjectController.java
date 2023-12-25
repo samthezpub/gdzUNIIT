@@ -1,13 +1,17 @@
 package com.example.gdzunit.Controllers;
 
 import com.example.gdzunit.Entity.Role;
+import com.example.gdzunit.Entity.Subject;
 import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Services.impl.RoleServiceImpl;
 import com.example.gdzunit.Services.impl.SubjectServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -34,4 +38,5 @@ public class SubjectController {
 
         return "addSubject";
     }
+
 }
