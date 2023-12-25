@@ -81,9 +81,19 @@
                 <div class="d-flex">
                   <p class="text-muted mb-0 pe-2">Вариант:</p>
                   <p
-                    class="mb-0"
+                    class="mb-0 margin-r"
                     id="userVariant"
                     th:text="${user.getVariant().getVariant_value()}"
+                  >
+                    123
+                  </p>
+
+
+                  <p class="text-muted mb-0 pe-2">ID:</p>
+                  <p
+                          class="mb-0 margin-r"
+                          id="ID"
+                          th:text="${user.id}"
                   >
                     123
                   </p>
@@ -97,6 +107,7 @@
                 <!-- Посмотреть -->
                 <li class="nav-item me-3 me-lg-0">
                   <a
+                          th:href="@{/moderation/user?id=} + ${user.id}"
                     class="text-reset d-inline-block"
                     title="Посмотреть"
                     href="#"
@@ -145,4 +156,10 @@
       th:src="@{/js/bootstrap.bundle.min.js}"
     ></script>
   </body>
+
+<style>
+  .margin-r{
+    margin-right: 10px;
+  }
+</style>
 </html>
