@@ -9,7 +9,7 @@
         <input name="id" th:value="*{id}" readonly>
         <input name="username" th:value="*{username}">
         <input name="password" th:value="*{password}">
-        <input type="checkbox" name="enabled" th:value="*{getEnabled()}">
+        <input type="checkbox" name="enabled" th:checked="*{isEnabled()}">
         <input name="variant" th:value="*{variant.variant_value}">
         <input name="avatarURL" th:value="*{avatarURL}">
 

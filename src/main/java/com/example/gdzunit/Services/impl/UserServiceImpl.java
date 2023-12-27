@@ -81,7 +81,6 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-    @Cacheable(cacheNames = {"getUser"})
     @Override
     public User getUser(long id) throws UserNotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Пользователь не найден!"));
@@ -100,7 +99,7 @@ public class UserServiceImpl implements UserService {
         user.setId(userFromDB.getId());
         user.setRoles(userFromDB.getRoles());
         user.setComments(userFromDB.getComments());
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
 
 }

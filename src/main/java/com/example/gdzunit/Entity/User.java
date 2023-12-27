@@ -44,7 +44,7 @@ public class User implements UserDetails {
 
     @Column(name = "enabled")
     @Transient
-    private Boolean enabled;
+    private boolean enabled;
 
     @Column(name = "avatar")
     private String avatarURL;
@@ -65,7 +65,7 @@ public class User implements UserDetails {
         this.roles = new HashSet<>();
     }
 
-    public User(String username, String password, Variant variant, Set<Role> roles, Boolean enabled) {
+    public User(String username, String password, Variant variant, Set<Role> roles, boolean enabled) {
         this.username = username;
         this.password = password;
         this.variant = variant;
@@ -108,6 +108,10 @@ public class User implements UserDetails {
 //        if (Duration.between(LocalDateTime.now(), activationExpiryTime).getSeconds() < 0){
 //            return false;
 //        }
-        return true;
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled){
+        this.enabled = enabled;
     }
 }

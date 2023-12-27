@@ -45,10 +45,13 @@ public class ModerationController {
 
     @GetMapping(path="/user")
     public String userInfo(@RequestParam(value = "id") Long id, Model model) {
-        try {
-            model.addAttribute("user", userService.getUser(id));
+        User user = null;
 
-            if (userService.getUser(id).isEnabled()) {
+        try {
+            user = userService.getUser(id);
+            model.addAttribute("user", user);
+
+            if (user.isEnabled()) {
                 model.addAttribute("isUserEnabled", true);
             } else {
                 model.addAttribute("isUserEnabled", false);
