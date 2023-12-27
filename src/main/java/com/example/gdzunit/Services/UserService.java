@@ -12,5 +12,5 @@ public interface UserService extends UserDetailsService {
     void deleteUser(User user);
     User getUser(long id) throws UserNotFoundException;
     List<User> getAllUsers();
-    void updateUser(User user);
+    void updateUser(User user) throws UserNotFoundException;
 }

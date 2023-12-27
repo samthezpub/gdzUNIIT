@@ -2,6 +2,7 @@ package com.example.gdzunit.Controllers;
 
 import com.example.gdzunit.Entity.Subject;
 import com.example.gdzunit.Entity.User;
+import com.example.gdzunit.Exceptions.UserNotFoundException;
 import com.example.gdzunit.Services.UserService;
 import com.example.gdzunit.Services.impl.SubjectServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
@@ -56,7 +57,11 @@ public class UploadController {
 
         // Устанавливаем аватар юзеру и обновляем
         currentUser.setAvatarURL(newFileName);
-        userService.updateUser(currentUser);
+        try {
+            userService.updateUser(currentUser);
+        } catch (UserNotFoundException e) {
+            return "404";
+        }
 
         model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
 

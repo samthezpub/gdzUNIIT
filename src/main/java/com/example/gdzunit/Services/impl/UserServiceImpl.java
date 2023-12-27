@@ -93,7 +93,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void updateUser(User user) throws UserNotFoundException {
+        User userFromDB = userRepository.findById(user.getId()).orElseThrow(
+                () -> new UserNotFoundException("Пользователь не найден!")
+        );
+        user.setId(userFromDB.getId());
+        user.setRoles(userFromDB.getRoles());
+        user.setComments(userFromDB.getComments());
         userRepository.save(user);
     }
 

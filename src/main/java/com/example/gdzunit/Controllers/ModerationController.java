@@ -5,12 +5,11 @@ import com.example.gdzunit.Entity.User;
 import com.example.gdzunit.Exceptions.UserNotFoundException;
 import com.example.gdzunit.Services.impl.RoleServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -60,5 +59,31 @@ public class ModerationController {
         } catch (UserNotFoundException e) {
             return "404";
         }
+    }
+
+    @GetMapping(path = "/user/{id}/edit")
+    public String editUserInfoPage(@PathVariable Long id, Model model){
+        User user = null;
+        try {
+            user = userService.getUser(id);
+            model.addAttribute("user", user);
+
+            return "editUserInfoPage";
+        } catch (UserNotFoundException e) {
+            return "redirect:/404";
+        }
+
+
+    }
+
+    @PostMapping(path = "/user/edit/confirm")
+    public String editUserInfo(@ModelAttribute User user){
+        try {
+            userService.updateUser(user);
+        } catch (UserNotFoundException e) {
+            return "404";
+        }
+
+        return "redirect:/moderation";
     }
 }
