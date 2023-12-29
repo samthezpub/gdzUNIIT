@@ -30,6 +30,7 @@
 
 
 <form
+        th:object="${answer}"
         class="container bg-dark-subtle p-3 rounded-3 text-center mt-3"
         th:action="@{/answers/addanswer}"
         method="post"
@@ -44,7 +45,9 @@
                 class="form-control"
                 id="answerTitle"
         />
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></p>
     </div>
+
 
     <div class="mb-4">
         <label class="form-label">Текст ответа</label>
@@ -53,7 +56,9 @@
             <textarea type="text" rows="4" id="content" placeholder="Content" name="content" class="form-control"
                       autocomplete="off"></textarea>
         </div>
+        <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color: red;"></p>
     </div>
+
 
     <!-- Выбор варианта -->
     <div class="mb-4">

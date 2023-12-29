@@ -7,11 +7,13 @@ import com.example.gdzunit.Services.UserService;
 import com.example.gdzunit.Services.impl.SubjectServiceImpl;
 import com.example.gdzunit.Services.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,7 +71,12 @@ public class UploadController {
     }
 
     @PostMapping("/uploadSubject")
-    public String uploadSubjectImage(@ModelAttribute Subject subject, Model model, @RequestParam("image") MultipartFile file, HttpServletRequest request) throws IOException {
+    public String uploadSubjectImage(@ModelAttribute @Valid Subject subject, BindingResult bindingResult, Model model, @RequestParam("image") MultipartFile file, HttpServletRequest request) throws IOException {
+        if (bindingResult.hasErrors()){
+            model.addAttribute("user", userService.getCurrentUser());
+            return "addSubject";
+        }
+
         StringBuilder fileNames = new StringBuilder();
 
         String newFileName = subject.getName() + ".jpg";

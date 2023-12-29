@@ -2,6 +2,7 @@ package com.example.gdzunit.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +18,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     @Column(name = "content")
     private String content;
 

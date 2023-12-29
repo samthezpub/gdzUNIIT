@@ -9,6 +9,7 @@ import com.example.gdzunit.Exceptions.NoCommentsException;
 import com.example.gdzunit.Services.CommentService;
 import com.example.gdzunit.Services.impl.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.commonmark.node.Node;
@@ -16,6 +17,7 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -79,7 +81,15 @@ public class AnswerController {
     // Обрабатывает полученный запрос и обрабатывает его,
     // добавляет полученный Answer в бд к определённому subject
     @PostMapping("/addanswer")
-    public String addAnswer(@ModelAttribute("answer") Answer answer, Model model) {
+    public String addAnswer(@ModelAttribute("answer") @Valid Answer answer, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("variants", variantService.findAll());
+            model.addAttribute("subjects", subjectService.findAll());
+            User currentUser = userService.getCurrentUser();
+            model.addAttribute("user", currentUser);
+            return "addAnswer";
+        }
 
         System.out.println(answer);
         answerService.addAnswer(answer);
@@ -126,7 +136,27 @@ public class AnswerController {
 
 
     @PostMapping("/addcomment/{id}")
-    public String addComment(@ModelAttribute("comment") Comment comment, @PathVariable Long id, HttpServletRequest request) {
+    public String addComment(@ModelAttribute("comment") @Valid Comment comment, BindingResult bindingResult, @PathVariable Long id, HttpServletRequest request, Model model) {
+        if (bindingResult.hasErrors()){
+            Answer answerByAnswerTitle = null;
+            List<Comment> commentList;
+            try {
+                answerByAnswerTitle = answerService.getAnswerById(id);
+            } catch (NoAnswersException e) {
+                return "404";
+            }
+            try {
+               commentList = commentService.getAllCommentsByAnswerId(answerByAnswerTitle.getId());
+
+            } catch (NoCommentsException e) {
+                return "404";
+            }
+            model.addAttribute("answer", answerByAnswerTitle);
+            model.addAttribute("user", userService.getCurrentUser());
+            model.addAttribute("comments", commentList);
+            return "showAnswer";
+        }
+
         try {
             comment.setAnswer(answerService.getAnswerById(id));
             comment.setAuthor(userService.getCurrentUser());

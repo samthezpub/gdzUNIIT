@@ -23,6 +23,7 @@
     <div th:replace="~{nav :: nav}"></div>
 
     <form
+            th:object="${subject}"
       class="container bg-dark-subtle p-3 rounded-3 text-center mt-3"
       th:action="@{/uploadSubject}"
       method="post"
@@ -37,7 +38,9 @@
           placeholder="Название предмета"
           class="form-control"
           id="subjectName"
+          th:field="*{name}"
         />
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></p>
       </div>
       <!-- Кнопки -->
       <div class="text-center">
@@ -51,6 +54,7 @@
         <span class="fas fa-plus"></span>
         Загрузить аватарку
       </button>
+        <p th:if="${#fields.hasErrors('image_url')}" th:errors="*{image_url}" style="color: red;"></p>
 
       <!-- Окно загрузки файлов -->
       <div
@@ -103,7 +107,7 @@
                       id="imgInput"
                     />
                   </div>
-                  <span th:if="${msg != null}" th:text="${msg}"></span>
+                  <span th:if="${msg != null}" th:text="${msg}" ></span>
                 </div>
               </form>
             </div>
@@ -123,7 +127,6 @@
           </div>
         </div>
       </div>
-        <input type="submit" value="Добавить">
     </form>
     <!-- Скрипт -->
     <script

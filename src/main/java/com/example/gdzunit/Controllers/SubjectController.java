@@ -36,6 +36,8 @@ public class SubjectController {
         Role adminRole = roleService.getAdminRole();
         model.addAttribute("isUserHaveAdminRole", currentUser.getRoles().contains(adminRole));
 
+        model.addAttribute("subject", new Subject());
+
         return "addSubject";
     }
 

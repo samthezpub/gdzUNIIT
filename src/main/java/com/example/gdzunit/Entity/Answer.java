@@ -1,6 +1,7 @@
 package com.example.gdzunit.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +15,11 @@ public class Answer {
     @GeneratedValue
     private Long id;
 
+    @org.hibernate.validator.constraints.NotEmpty
     @Column(name = "title")
     private String title;
 
+    @org.hibernate.validator.constraints.NotEmpty
     @Column(name = "content")
     private String content;
 
