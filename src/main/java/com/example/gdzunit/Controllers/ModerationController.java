@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping(path="/moderation")
+@RequestMapping(path = "/moderation")
 public class ModerationController {
 
     private final UserServiceImpl userService;
@@ -25,37 +25,32 @@ public class ModerationController {
         this.roleService = roleService;
     }
 
-    @GetMapping(path="")
+    @GetMapping(path = "")
     public String showModerPage(Model model) {
         User currentUser = userService.getCurrentUser();
         model.addAttribute("user", currentUser);
 
         Role adminRole = roleService.getAdminRole();
-        if (currentUser.getRoles().contains(adminRole)){
+        if (currentUser.getRoles().contains(adminRole)) {
             model.addAttribute("isUserHaveAdminRole", true);
             List<User> userList = userService.getAllUsers();
             model.addAttribute("allUsersList", userList);
             model.addAttribute(currentUser);
             return "moderation";
-        }
-        else {
+        } else {
             return "403";
         }
     }
 
-    @GetMapping(path="/user")
+    @GetMapping(path = "/user")
     public String userInfo(@RequestParam(value = "id") Long id, Model model) {
         User user = null;
 
         try {
             user = userService.getUser(id);
+
             model.addAttribute("user", user);
 
-            if (user.isEnabled()) {
-                model.addAttribute("isUserEnabled", true);
-            } else {
-                model.addAttribute("isUserEnabled", false);
-            }
 
             model.addAttribute("userVariant", userService.getUser(id).getVariant());
             return "userinfo";
@@ -65,7 +60,7 @@ public class ModerationController {
     }
 
     @GetMapping(path = "/user/{id}/edit")
-    public String editUserInfoPage(@PathVariable Long id, Model model){
+    public String editUserInfoPage(@PathVariable Long id, Model model) {
         User user = null;
         try {
             user = userService.getUser(id);
@@ -80,7 +75,7 @@ public class ModerationController {
     }
 
     @PostMapping(path = "/user/edit/confirm")
-    public String editUserInfo(@ModelAttribute User user){
+    public String editUserInfo(@ModelAttribute User user) {
         try {
             userService.updateUser(user);
         } catch (UserNotFoundException e) {

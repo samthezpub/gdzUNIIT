@@ -43,7 +43,6 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @Column(name = "enabled")
-    @Transient
     private boolean enabled;
 
     @Column(name = "avatar")
@@ -108,7 +107,7 @@ public class User implements UserDetails {
 //        if (Duration.between(LocalDateTime.now(), activationExpiryTime).getSeconds() < 0){
 //            return false;
 //        }
-        return this.enabled;
+        return enabled;
     }
 
     public void setEnabled(boolean enabled){

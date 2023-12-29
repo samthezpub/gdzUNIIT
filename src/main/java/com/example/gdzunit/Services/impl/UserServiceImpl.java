@@ -96,9 +96,9 @@ public class UserServiceImpl implements UserService {
         User userFromDB = userRepository.findById(user.getId()).orElseThrow(
                 () -> new UserNotFoundException("Пользователь не найден!")
         );
-        user.setId(userFromDB.getId());
         user.setRoles(userFromDB.getRoles());
         user.setComments(userFromDB.getComments());
+
         userRepository.saveAndFlush(user);
     }
 

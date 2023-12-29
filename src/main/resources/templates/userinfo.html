@@ -76,7 +76,7 @@
                 <div class="col">
                     <div class="d-inline-flex align-items-center">
                         <p class="text-muted">Активирован?</p>
-                        <p class="ms-2" th:text="${isUserEnabled ? 'Да' : 'Нет'}"></p>
+                        <p class="ms-2" th:text="${user.isEnabled() ? 'Да' : 'Нет'}"></p>
                     </div>
                 </div>
             </div>
