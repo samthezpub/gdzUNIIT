@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="post" th:object="${user}" th:action="@{/moderation/user/edit/confirm}">
+        <input name="id" th:value="*{id}" readonly>
+        <input name="username" th:value="*{username}">
+        <input name="password" th:value="*{password}">
+        <input type="checkbox" name="enabled" th:field="*{enabled}">
+        <input name="variant" th:value="*{variant.variant_value}">
+        <input name="avatarURL" th:value="*{avatarURL}">
+
+        <button type="submit"></button>
+    </form>
+</body>
+</html>

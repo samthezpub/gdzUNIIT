@@ -43,20 +43,19 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @Column(name = "enabled")
-    @Transient
-    private Boolean enabled;
+    private boolean enabled;
 
     @Column(name = "avatar")
     private String avatarURL;
 
-    @Column(name = "register_date")
-    private LocalDateTime registerDate;
-
-    @Column(name = "last_online_time")
-    private LocalDateTime lastOnlineTime;
-
-    @Column(name = "activation_expiry_time")
-    private LocalDateTime activationExpiryTime;
+//    @Column(name = "register_date")
+//    private LocalDateTime registerDate;
+//
+//    @Column(name = "last_online_time")
+//    private LocalDateTime lastOnlineTime;
+//
+//    @Column(name = "activation_expiry_time")
+//    private LocalDateTime activationExpiryTime;
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<Comment> comments;
@@ -65,7 +64,7 @@ public class User implements UserDetails {
         this.roles = new HashSet<>();
     }
 
-    public User(String username, String password, Variant variant, Set<Role> roles, Boolean enabled) {
+    public User(String username, String password, Variant variant, Set<Role> roles, boolean enabled) {
         this.username = username;
         this.password = password;
         this.variant = variant;
@@ -105,9 +104,13 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (Duration.between(LocalDateTime.now(), activationExpiryTime).getSeconds() < 0){
-            return false;
-        }
-        return true;
+//        if (Duration.between(LocalDateTime.now(), activationExpiryTime).getSeconds() < 0){
+//            return false;
+//        }
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled){
+        this.enabled = enabled;
     }
 }

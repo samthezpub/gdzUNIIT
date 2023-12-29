@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException(e);
             }
 
-            user.setRegisterDate(LocalDateTime.now());
+//            user.setRegisterDate(LocalDateTime.now());
 
 
             userRepository.save(user);
@@ -81,7 +81,6 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-    @Cacheable(cacheNames = {"getUser"})
     @Override
     public User getUser(long id) throws UserNotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Пользователь не найден!"));
@@ -93,8 +92,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) {
-        userRepository.save(user);
+    public void updateUser(User user) throws UserNotFoundException {
+        User userFromDB = userRepository.findById(user.getId()).orElseThrow(
+                () -> new UserNotFoundException("Пользователь не найден!")
+        );
+        user.setRoles(userFromDB.getRoles());
+        user.setComments(userFromDB.getComments());
+
+        userRepository.saveAndFlush(user);
     }
 
 }
